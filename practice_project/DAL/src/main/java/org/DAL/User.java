@@ -1,12 +1,31 @@
 package org.DAL;
 
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROGECT_SEQ")
+	@SequenceGenerator(name = "PROGECT_SEQ", sequenceName = "project_seq", 
+		initialValue = 1, allocationSize = 1)
+	@Column(name = "id", unique = true, nullable = false, insertable = true, 
+	updatable = true)
 	protected long id;
+	
+	@Column(name = "login", unique = true, nullable = false, insertable = true, 
+			updatable = true, length = 45)
 	protected String login;
+	
+	@Column(name = "email", unique = true, nullable = false, insertable = true, 
+			updatable = true, length = 45)
 	protected String email;
+	
+	@Column(name = "password", unique = false, nullable = false, insertable = true, 
+			updatable = true, length = 45)
 	protected String password;
-	protected short user_category;
+	//protected short user_category;
 	
 	public User() {}
 
@@ -42,12 +61,12 @@ public class User {
 		this.password = password;
 	}
 
-	public short getUser_category() {
+	/*public short getUser_category() {
 		return user_category;
 	}
 
 	public void setUser_category(short user_category) {
 		this.user_category = user_category;
-	}
+	}*/
 	
 }
