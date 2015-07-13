@@ -3,6 +3,7 @@ package org.use_module;
 import java.util.Date;
 
 
+
 import org.DAL.*;
 
 /**
@@ -16,17 +17,18 @@ public class App
         System.out.println( "Hello World!" );
         System.out.println( "Insert start!" );
         Admin admin = new Admin();
-        admin.setLogin("admin1");
-        admin.setEmail("admin@mail.ru");
-        admin.setFirstName("Kolya");
+        admin.setLogin("admin2");
+        admin.setEmail("admin2@mail.ru");
+        admin.setFirstName("Ivan");
         admin.setLastName("Ivanov");
         admin.setPassword("12345");
         admin.setPhone("89103494786");
         admin.setRegistrationDate(new Date());
-        UserDAO.insertUser(admin);
+        //UserDAO.insertUser(admin);
         System.out.println( "Insert finish!" );
         System.out.println( "Select start!" );
-        User user = UserDAO.getUserOfLogin("admin1");
+        UserDAO userDAO = new UserDAO();
+        Person user = userDAO.getUserOfLogin("admin2");
         if (user instanceof Admin)
         	printAdmin((Admin)user);
         else
@@ -36,6 +38,7 @@ public class App
     
     private static void printAdmin(Admin admin)
     {
+    	System.out.println(admin.getId());
     	System.out.println(admin.getLogin());
     	System.out.println(admin.getFirstName());
     	System.out.println(admin.getLastName());

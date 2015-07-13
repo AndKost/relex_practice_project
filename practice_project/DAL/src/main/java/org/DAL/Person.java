@@ -3,8 +3,9 @@ package org.DAL;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Person")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+public class Person {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROGECT_SEQ")
@@ -27,7 +28,7 @@ public class User {
 	protected String password;
 	//protected short user_category;
 	
-	public User() {}
+	public Person() {}
 
 	public long getId() {
 		return id;

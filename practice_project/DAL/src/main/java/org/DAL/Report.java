@@ -9,8 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Report")
 public class Report {
 	
 	@Id
@@ -69,7 +71,7 @@ public class Report {
 	public void setDicision(String dicision) {
 		this.decision = dicision;
 	}
-	public User getAuthor() {
+	public Person getAuthor() {
 		return author;
 	}
 	public void setAuthor(Admin author) {
