@@ -22,9 +22,12 @@
     <property name="current_session_context_class">thread</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
 
-    <mapping class="org.DAL.User" />
+    <mapping class="org.DAL.Person" />
     <mapping class="org.DAL.Admin" />
     <mapping class="org.DAL.Citizen" />
     <mapping class="org.DAL.News" />
+    <mapping class="org.DAL.Comment" />
+    <mapping class="org.DAL.Interview" />
+    <mapping class="org.DAL.Report" />
   </session-factory>
 </hibernate-configuration>

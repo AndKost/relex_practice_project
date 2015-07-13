@@ -7,8 +7,9 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Citizen")
 @PrimaryKeyJoinColumn(name = "citizenId", referencedColumnName = "id")
-public class Citizen extends User {
+public class Citizen extends Person {
 	
 	//private long citizenId;
 	

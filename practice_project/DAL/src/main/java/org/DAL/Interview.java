@@ -3,10 +3,12 @@ package org.DAL;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Interview")
 public class Interview {
 	
 	@Id
@@ -30,11 +32,15 @@ public class Interview {
 			updatable = true)
 	private Date finishDate;
 	
+	@Column(name = "text", unique = false, nullable = false, insertable = true, 
+			updatable = true)
+	private String text;
 	
-	private ArrayList<Comment> comments;
+	@OneToMany(mappedBy = "interview")
+	private List<Comment> comments = new ArrayList<Comment>();
 	
 	@ManyToMany(mappedBy = "interviews")
-	private ArrayList<Citizen> citizens;
+	private List<Citizen> citizens = new ArrayList<Citizen>();
 	
 	public Interview() {}
 	
@@ -44,7 +50,7 @@ public class Interview {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public User getAuthor() {
+	public Person getAuthor() {
 		return author;
 	}
 	public void setAuthor(Admin author) {
@@ -62,17 +68,25 @@ public class Interview {
 	public void setFinishDate(Date finishDate) {
 		this.finishDate = finishDate;
 	}
-	public ArrayList<Comment> getComments() {
+	public List<Comment> getComments() {
 		return comments;
 	}
 	public void setComments(ArrayList<Comment> comments) {
 		this.comments = comments;
 	}
-	public ArrayList<Citizen> getCitizens() {
+	public List<Citizen> getCitizens() {
 		return citizens;
 	}
 	public void setCitizens(ArrayList<Citizen> citizens) {
 		this.citizens = citizens;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 	
 	
