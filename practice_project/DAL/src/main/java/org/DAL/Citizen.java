@@ -33,7 +33,7 @@ public class Citizen extends Person {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "InerviewToCitizen", joinColumns = {@JoinColumn(name = "citizenId",
 			referencedColumnName = "citizenId")}, inverseJoinColumns = {@JoinColumn(
-					name = "inretviewId", referencedColumnName = "id")})
+					name = "interviewId", referencedColumnName = "id")})
 	private List<Interview> interviews = new ArrayList<Interview>();
 	
 	public List<Interview> getInterviews() {

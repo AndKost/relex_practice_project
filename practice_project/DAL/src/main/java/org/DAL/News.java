@@ -25,6 +25,10 @@ public class News {
 			updatable = true)
 	private String text;
 	
+	@Column(name = "shortText", unique = false, nullable = false, insertable = true, 
+			updatable = true)
+	private String shortText;
+	
 	@Temporal(value = TemporalType.DATE)
 	@Column(name = "date", unique = false, nullable = false, insertable = true, 
 			updatable = true)
@@ -75,6 +79,14 @@ public class News {
 
 	public void setAuthor(Admin author) {
 		this.author = author;
+	}
+
+	public String getShortText() {
+		return shortText;
+	}
+
+	public void setShortText(String shortText) {
+		this.shortText = shortText;
 	}
 	
 
