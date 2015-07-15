@@ -1,4 +1,4 @@
-package org.DAL;
+package org.DAL.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

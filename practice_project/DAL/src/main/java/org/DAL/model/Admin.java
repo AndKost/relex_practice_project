@@ -1,4 +1,4 @@
-package org.DAL;
+package org.DAL.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,12 +7,11 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Citizen")
-@PrimaryKeyJoinColumn(name = "citizenId", referencedColumnName = "id")
-public class Citizen extends Person {
+@Table(name = "Admin")
+@PrimaryKeyJoinColumn(name = "adminId", referencedColumnName = "id")
+public class Admin extends Person {
 	
-	//private long citizenId;
-	
+	//private long adminId;
 	@Column(name = "firstName", unique = false, nullable = false, insertable = true, 
 			updatable = true, length = 45)
 	private String firstName;
@@ -26,15 +25,20 @@ public class Citizen extends Person {
 			updatable = true, length = 45)
 	private Date registrationDate;
 	
-	@Column(name = "bonusPoint", unique = false, nullable = false, insertable = true, 
-			updatable = true)
-	private long bonusPoint;
+	@Column(name = "phone", unique = false, nullable = false, insertable = true, 
+			updatable = true, length = 20)
+	private String phone;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "InerviewToCitizen", joinColumns = {@JoinColumn(name = "citizenId",
-			referencedColumnName = "citizenId")}, inverseJoinColumns = {@JoinColumn(
-					name = "inretviewId", referencedColumnName = "id")})
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Interview> interviews = new ArrayList<Interview>();
+	
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+	private List<News> news = new ArrayList<News>();
+	
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+	private List<Report> reports = new ArrayList<Report>();
+	
+	public Admin() {}
 	
 	public List<Interview> getInterviews() {
 		return interviews;
@@ -44,14 +48,20 @@ public class Citizen extends Person {
 		this.interviews = interviews;
 	}
 
-	public Citizen() {}
-
-	/*public long getCitizenId() {
-		return citizenId;
+	public List<News> getNews() {
+		return news;
 	}
 
-	public void setCitizenId(long citizenId) {
-		this.citizenId = citizenId;
+	public void setNews(List<News> news) {
+		this.news = news;
+	}
+
+	/*public long getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(long adminId) {
+		this.adminId = adminId;
 	}*/
 
 	public String getFirstName() {
@@ -78,13 +88,20 @@ public class Citizen extends Person {
 		this.registrationDate = registrationDate;
 	}
 
-	public long getBonusPoint() {
-		return bonusPoint;
+	public List<Report> getReports() {
+		return reports;
 	}
 
-	public void setBonusPoint(long bonusPoint) {
-		this.bonusPoint = bonusPoint;
+	public void setReports(List<Report> reports) {
+		this.reports = reports;
 	}
-	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 }
