@@ -4,6 +4,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.DAL.model.Interview;
+
 @Stateless
 public class InterviewService extends InterviewDAO {
 		
@@ -21,5 +23,7 @@ public class InterviewService extends InterviewDAO {
 		// TODO Auto-generated method stub
 		super.insertInterview(interview);
 	}
+	
+	@Override
 	
 }

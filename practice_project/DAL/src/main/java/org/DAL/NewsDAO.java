@@ -5,49 +5,59 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.DAL.model.News;
+
 public class NewsDAO {
 	
-	EntityManager em;
+	private EntityManager em;
 	
 	public	NewsDAO() {
-		em = HibernateUtil.getEjb3Configuration().buildEntityManagerFactory().
-				createEntityManager();
+		setEntityManager(HibernateUtil.getEjb3Configuration().buildEntityManagerFactory().
+				createEntityManager());
 	}
 	
 	/*Добавление новости*/
 	public void insertNews(News news)
 	{
-		em.getTransaction().begin();
-		em.persist(news);
-		em.getTransaction().commit();
-		em.close();
+		getEntityManager().getTransaction().begin();
+		getEntityManager().persist(news);
+		getEntityManager().getTransaction().commit();
+		getEntityManager().close();
 	}
 	
 	/*Удаление новости по id*/
 	public void remoteNews(int newsId){
-		em.getTransaction().begin();
-		News tmp = em.find(News.class, newsId);
-		em.remove(tmp);
-		em.getTransaction().commit();
-		em.close();
+		getEntityManager().getTransaction().begin();
+		News tmp = getEntityManager().find(News.class, newsId);
+		getEntityManager().remove(tmp);
+		getEntityManager().getTransaction().commit();
+		getEntityManager().close();
 	}
 	
 	/*Выбираем все новости*/
 	public void getAllNews(){
-		em.getTransaction().begin();
-		Query query = em.createQuery("FROM News");
+		getEntityManager().getTransaction().begin();
+		Query query = getEntityManager().createQuery("FROM News");
 		List<News> result = query.getResultList();
-		em.getTransaction().commit();
-		em.close();
+		getEntityManager().getTransaction().commit();
+		getEntityManager().close();
 	}
 	
 	/*Получение новости по id*/
 	public News getNewsById(long id){
-		em.getTransaction().begin();
-		News result = em.find(News.class, id);
-		em.getTransaction().commit();
-		em.close();
+		getEntityManager().getTransaction().begin();
+		News result = getEntityManager().find(News.class, id);
+		getEntityManager().getTransaction().commit();
+		getEntityManager().close();
 		return result;
+	}
+
+	EntityManager getEntityManager() {
+		return em;
+	}
+
+	void setEntityManager(EntityManager em) {
+		this.em = em;
 	}
 	
 	/*Вперспективе функция редактирования для этого обновление новости*/
