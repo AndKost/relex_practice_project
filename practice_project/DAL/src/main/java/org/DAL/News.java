@@ -11,7 +11,7 @@ public class News {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROGECT_SEQ")
-	@SequenceGenerator(name = "PROGECT_SEQ", sequenceName = "project_seq", 
+	@SequenceGenerator(name = "INFO_SEQ", sequenceName = "project_seq", 
 		initialValue = 1, allocationSize = 1)
 	@Column(name = "id", unique = true, nullable = false, insertable = true, 
 	updatable = true)
