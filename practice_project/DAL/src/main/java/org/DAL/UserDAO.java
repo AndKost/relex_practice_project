@@ -1,94 +1,138 @@
 package org.DAL;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 
-public class UserDAO {
-	
-	EntityManager em;
-	
-	public UserDAO() 
+public abstract class UserDAO {
+
+	/*
+	 * Регистрация нового гражданина.
+	 * Возвращает объект типа Citizen, если новый гражданин зарегстрирован,
+	 * возвращает null, если логин занят.
+	 */
+	public Citizen registrationCitizen(String login, String password, String email,
+									   String firstName, String lastName)
 	{
-		em = HibernateUtil.getEjb3Configuration().buildEntityManagerFactory().
-				createEntityManager();
+		Person person = getUserOfLogin(login);
+		if (person == null)
+			return null;
+		Citizen citizen = new Citizen();
+		citizen.setLogin(login);
+		citizen.setPassword(password);
+		citizen.setEmail(email);
+		citizen.setFirstName(firstName);
+		citizen.setLastName(lastName);
+		citizen.setRegistrationDate(new Date());
+		citizen.setBonusPoint(10);
+		getEntityManager().persist(citizen);
+		return citizen;
 	}
 	
-	public void registrationUser(Person user)
+	/*
+	 * Регистрация нового администратора.
+	 * Возвращает объект типа Admin, если новый администратор зарегстрирован,
+	 * возвращает null, если логин занят.
+	 */
+	public Admin registrationAdmin(String login, String password, String email,
+									 String firstName, String lastName, String phone)
 	{
-		em.getTransaction().begin();
-		em.persist(user);
-		em.getTransaction().commit();
-		em.close();
+		Person person = getUserOfLogin(login);
+		if (person == null)
+			return null;
+		Admin admin = new Admin();
+		admin.setLogin(login);
+		admin.setPassword(password);
+		admin.setEmail(email);
+		admin.setFirstName(firstName);
+		admin.setLastName(lastName);
+		admin.setRegistrationDate(new Date());
+		admin.setPhone(phone);
+		getEntityManager().persist(admin);
+		return admin;
 	}
 	
-	public List<Person> getAllUsers()
+	/*
+	 * Изменение пароля пользователя.
+	 * Возвращает 0 если пароль изменен,
+	 * 1 - если старый пароль неверен,
+	 * -1 - если пользователь не найден в базе данных.
+	 */
+	public int changePassword(long id, String oldPassword, String newPassword)
 	{
-		em.getTransaction().begin();
-		List<Person> result = em.createQuery("FROM Person").getResultList();
-		em.getTransaction().commit();
-		em.close();
-		return result;
+		Person person = getEntityManager().find(Person.class, id);
+		if (person == null)
+			return -1;
+		if (person.password.equals(oldPassword))
+			person.setPassword(newPassword);
+		else
+			return 1;
+		return 0;
+			
 	}
 	
-	public void changePassword(long id, String newPassword)
-	{
-		em.getTransaction().begin();
-		Person person = em.find(Person.class, id);
-		person.setPassword(newPassword);
-		em.getTransaction().commit();
-		em.close();
-	}
-	
+	/*
+	 * Поиск пользователя по логину.
+	 * Возвращает null если пользователь не найден в базе данных.
+	 */
 	public Person getUserOfLogin(String login)
 	{
-		EntityManager em = HibernateUtil.getEjb3Configuration().buildEntityManagerFactory().
-				createEntityManager();
-		em.getTransaction().begin();
 		String q = "FROM Person p WHERE p.login = :userLogin";
-		Query query = em.createQuery(q);
+		Query query = getEntityManager().createQuery(q);
 		query.setParameter("userLogin", login);
 		List<Person> result = query.getResultList();
-		em.getTransaction().commit();
-		em.close();
 		if (result != null && !result.isEmpty())
 			return result.get(0);
 		else
 			return null;
 	}
 	
-	public void changeInfoAdmin(long id, String firstName, String lastName, String phone, String email)
+	/*
+	 * Изменение данных администратора.
+	 * Возвращает 0 если данные изменены,
+	 * -1 - если администратор не найден в базе данных.
+	 */
+	public int changeInfoAdmin(long id, String firstName, String lastName, String phone, String email)
 	{
-		em.getTransaction().begin();
-		Admin admin = em.find(Admin.class, id);
+		Admin admin = getEntityManager().find(Admin.class, id);
+		if (admin == null)
+			return -1;
 		admin.setEmail(email);
 		admin.setFirstName(firstName);
 		admin.setLastName(lastName);
 		admin.setPhone(phone);
-		em.getTransaction().commit();
-		em.close();
+		return 0;
 	}
 	
-	public void changeInfoCitizen(long id, String firstName, String lastName, String email)
+	/*
+	 * Изменение данных пользователя.
+	 * Возвращает 0 если данные изменены,
+	 * -1 - если пользователь не найден в базе данных.
+	 */
+	public int changeInfoCitizen(long id, String firstName, String lastName, String email)
 	{
-		em.getTransaction().begin();
-		Citizen citizen = em.find(Citizen.class, id);
+		getEntityManager().getTransaction().begin();
+		Citizen citizen = getEntityManager().find(Citizen.class, id);
+		if (citizen == null)
+			return -1;
 		citizen.setEmail(email);
 		citizen.setFirstName(firstName);
 		citizen.setLastName(lastName);
-		em.getTransaction().commit();
-		em.close();
+		return 0;
 	}
 	
 	public void changeBonusPoint(long id, long bonusPoint)
 	{
-		em.getTransaction().begin();
-		Citizen citizen = em.find(Citizen.class, id);
+		getEntityManager().getTransaction().begin();
+		Citizen citizen = getEntityManager().find(Citizen.class, id);
 		citizen.setBonusPoint(bonusPoint);
-		em.getTransaction().commit();
-		em.close();
+		getEntityManager().getTransaction().commit();
+		getEntityManager().close();
 	}
+
+	abstract EntityManager getEntityManager();
 
 }

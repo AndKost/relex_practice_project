@@ -11,7 +11,7 @@ public abstract class InterviewDAO {
 	
 	
 	
-	/*Добавление ооса*/
+	/*Добавление опроса*/
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void insertInterview(Interview interview)
 	{

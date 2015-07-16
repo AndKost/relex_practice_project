@@ -8,8 +8,8 @@ import javax.persistence.*;
 public class Person {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROGECT_SEQ")
-	@SequenceGenerator(name = "PERSON_SEQ", sequenceName = "project_seq", 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERSON_SEQ")
+	@SequenceGenerator(name = "PERSON_SEQ", sequenceName = "person_seq", 
 		initialValue = 1, allocationSize = 1)
 	@Column(name = "id", unique = true, nullable = false, insertable = true, 
 	updatable = true)
