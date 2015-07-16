@@ -1,5 +1,7 @@
 package org.DAL;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -26,6 +28,12 @@ public class Person {
 	@Column(name = "password", unique = false, nullable = false, insertable = true, 
 			updatable = true, length = 45)
 	protected String password;
+	
+	@Temporal(value = TemporalType.DATE)
+	@Column(name = "registrationDate", unique = false, nullable = false, insertable = true, 
+			updatable = true)
+	private Date registrationDate;
+	
 	//protected short user_category;
 	
 	public Person() {}
@@ -60,6 +68,14 @@ public class Person {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 	/*public short getUser_category() {

@@ -1,58 +1,110 @@
 package org.DAL;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public class NewsDAO {
+public abstract class NewsDAO {
 	
-	EntityManager em;
-	
-	public	NewsDAO() {
-		em = HibernateUtil.getEjb3Configuration().buildEntityManagerFactory().
-				createEntityManager();
-	}
-	
-	/*Добавление новости*/
-	public void insertNews(News news)
+	/*
+	 * Добавление новости.
+	 * Возвращает объект типа News, если новая новость добавлена,
+	 * null, если администратор не найден в база данных.
+	 */
+	public News insertNews(String title, String text, String shortText, long adminId)
 	{
-		em.getTransaction().begin();
-		em.persist(news);
-		em.getTransaction().commit();
-		em.close();
+		Admin admin = getEntityManager().find(Admin.class, adminId);
+		if (admin == null)
+			return null;
+		News news = new News();
+		news.setTitle(title);
+		news.setText(text);
+		news.setShortText(shortText);
+		news.setDate(new Date());
+		news.setAuthor(admin);
+		getEntityManager().persist(news);
+		return news;
 	}
 	
-	/*Удаление новости по id*/
-	public void remoteNews(int newsId){
-		em.getTransaction().begin();
-		News tmp = em.find(News.class, newsId);
-		em.remove(tmp);
-		em.getTransaction().commit();
-		em.close();
+	/*
+	 * Удаление новости по id.
+	 * Возвращает 0, если новость удалена,
+	 * 1, если новость не найдена.
+	 */
+	public int remoteNews(long newsId){
+		News news = getEntityManager().find(News.class, newsId);
+		if (news == null)
+			return 1;
+		getEntityManager().remove(news);
+		return 0;
 	}
 	
-	/*Выбираем все новости*/
-	public void getAllNews(){
-		em.getTransaction().begin();
-		Query query = em.createQuery("FROM News");
+	/*
+	 * Выбираем все новости за один месяц.
+	 * параметр date - строка в формате: год-месяц.
+	 */
+	public List<News> getAllNews(String date){
+		String q = "WHERE `date` LIKE ':curentDate-%'";
+		Query query = getEntityManager().createQuery(q);
+		query.setParameter("date", date);
 		List<News> result = query.getResultList();
-		em.getTransaction().commit();
-		em.close();
-	}
-	
-	/*Получение новости по id*/
-	public News getNewsById(long id){
-		em.getTransaction().begin();
-		News result = em.find(News.class, id);
-		em.getTransaction().commit();
-		em.close();
 		return result;
 	}
 	
-	/*Вперспективе функция редактирования для этого обновление новости*/
+	/*
+	 * Получение новости по id.
+	 * Возвращает объект типа News, если новость найдена,
+	 * null, если новость не найдена.
+	 */
+	public News getNewsById(long id){
+		News result = getEntityManager().find(News.class, id);
+		return result;
+	}
 	
+	/*
+	 * Редактирование заголовка новости.
+	 * Возвращает 0, если заголовок изменен,
+	 * -1, если новость не найдена.
+	 */
+	public int changeTitle(long id, String title)
+	{
+		News news = getNewsById(id);
+		if (news == null)
+			return -1;
+		news.setTitle(title);
+		return 0;
+	}
 	
-	/*Получение новостей за месяц*/
+	/*
+	 * Редактирование текста новости.
+	 * Возвращает 0, если текст изменен,
+	 * -1, если новость не найдена.
+	 */
+	public int changeText(long id, String text)
+	{
+		News news = getNewsById(id);
+		if (news == null)
+			return -1;
+		news.setText(text);
+		return 0;
+	}
+	
+	/*
+	 * Редактирование короткого текста новости.
+	 * Возвращает 0, если короткий текст изменен,
+	 * -1, если новость не найдена.
+	 */
+	public int changeShortText(long id, String shortText)
+	{
+		News news = getNewsById(id);
+		if (news == null)
+			return -1;
+		news.setShortText(shortText);
+		return 0;
+	}
+	
+	abstract EntityManager getEntityManager();
 	
 }

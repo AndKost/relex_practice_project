@@ -33,7 +33,7 @@ public class App
         	printAdmin((Admin)user);
         else
         	System.out.println("Error");*/
-        userDAO.changePassword(4, "54321");
+        //userDAO.changePassword(4, "54321");
         System.out.println( "Select finish!" );
     }
     
