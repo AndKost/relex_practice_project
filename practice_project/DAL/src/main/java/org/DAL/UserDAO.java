@@ -6,8 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.DAL.model.Admin;
+import org.DAL.model.Citizen;
 import org.DAL.model.Person;
-
 
 public abstract class UserDAO {
 
@@ -68,7 +69,7 @@ public abstract class UserDAO {
 		Person person = getEntityManager().find(Person.class, id);
 		if (person == null)
 			return -1;
-		if (person.password.equals(oldPassword))
+		if (person.getPassword().equals(oldPassword))
 			person.setPassword(newPassword);
 		else
 			return 1;

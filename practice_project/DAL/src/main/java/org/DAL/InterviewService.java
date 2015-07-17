@@ -24,6 +24,4 @@ public class InterviewService extends InterviewDAO {
 		super.insertInterview(interview);
 	}
 	
-	@Override
-	
 }

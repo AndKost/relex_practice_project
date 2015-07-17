@@ -2,6 +2,8 @@ package org.DAL.model;
 
 import java.util.Date;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
