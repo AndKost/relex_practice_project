@@ -2,7 +2,9 @@ package org.DAL.model;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Comment")
@@ -36,6 +38,12 @@ public class Comment {
 	@JoinColumn(name = "informId", referencedColumnName = "id", unique = false, 
 		nullable = false, insertable = true, updatable = false)
 	private Interview interview;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "CommentToCitizen", joinColumns = {@JoinColumn(name = "commentId",
+			referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(
+					name = "citizenId", referencedColumnName = "citizenId")})
+	private List<Citizen> interviews = new ArrayList<Citizen>();
 	
 	public Comment() {}
 	
