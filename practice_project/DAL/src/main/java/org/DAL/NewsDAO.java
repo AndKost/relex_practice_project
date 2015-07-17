@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.DAL.model.Admin;
+import org.DAL.model.News;
+
 public abstract class NewsDAO {
 	
 	/*

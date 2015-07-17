@@ -1,4 +1,4 @@
-package org.DAL;
+package org.DAL.model;
 
 import java.util.ArrayList;
 import java.util.List;

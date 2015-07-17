@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.DAL.model.Admin;
+import org.DAL.model.Citizen;
+import org.DAL.model.Person;
 
 public abstract class UserDAO {
 

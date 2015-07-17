@@ -6,6 +6,10 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.DAL.model.Admin;
+import org.DAL.model.Citizen;
+import org.DAL.model.Person;
+
 @Stateless
 public class UserService extends UserDAO {
 	

@@ -8,6 +8,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
+import org.DAL.model.News;
+
 @Stateless
 public class NewsService extends NewsDAO {
 	

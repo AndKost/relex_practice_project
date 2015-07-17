@@ -1,4 +1,6 @@
-package org.DAL;
+package org.DAL.model;
+
+import java.util.Date;
 
 import java.util.Date;
 

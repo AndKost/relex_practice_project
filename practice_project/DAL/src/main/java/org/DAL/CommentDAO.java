@@ -2,57 +2,44 @@ package org.DAL;
 
 import java.util.List;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public class CommentDAO {
+import org.DAL.model.Comment;
+
+public abstract class CommentDAO {
 	
-	EntityManager em;
-	
-	public	CommentDAO() {
-		em = HibernateUtil.getEjb3Configuration().buildEntityManagerFactory().
-				createEntityManager();
-	}
+	abstract EntityManager getEntityManager1();
 	
 	/*Добавление предложение*/
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void insertComment(Comment сomment)
 	{
-		em.getTransaction().begin();
-		em.persist(сomment);
-		em.getTransaction().commit();
-		em.close();
+		getEntityManager1().persist(сomment);
 	}
 	
 	/*Удаление предложение по id*/
 	public void remoteComment(int сommentId){
-		em.getTransaction().begin();
-		Comment tmp = em.find(Comment.class, сommentId);
-		em.remove(tmp);
-		em.getTransaction().commit();
-		em.close();
+		Comment tmp = getEntityManager1().find(Comment.class, сommentId);
+		getEntityManager1().remove(tmp);
 	}
-	
-	/*Выбираем все предложения к определенному опросу???*/
 	
 	/*Получение предложение по id*/
 	public Comment getCommentById(long id){
-		em.getTransaction().begin();
-		Comment result = em.find(Comment.class, id);
-		em.getTransaction().commit();
-		em.close();
+		Comment result = getEntityManager1().find(Comment.class, id);
 		return result;
 	}
 
-	/*Инкремент рейтинга*/
+	/*Начисление бонусов за голосование*/
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void incRate(long id) {
-		em.getTransaction().begin();
 		/*Получили комментарий*/
 		Comment tmp = getCommentById(id);
 		int vote = tmp.getNumberOfVotes();
 		tmp.setNumberOfVotes(++vote);
-		
-		em.getTransaction().commit();
-		em.close();
 	}
+
 	
 }

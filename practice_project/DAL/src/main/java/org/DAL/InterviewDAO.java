@@ -7,6 +7,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.DAL.model.Interview;
+import org.DAL.model.News;
+
 public abstract class InterviewDAO {
 	
 	
@@ -38,11 +41,9 @@ public abstract class InterviewDAO {
 	}
 	
 	/*Получение опроса по id*/
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Interview getInterviewById(long id){
-		getEntityManager().getTransaction().begin();
 		Interview result = getEntityManager().find(Interview.class, id);
-		getEntityManager().getTransaction().commit();
-		getEntityManager().close();
 		return result;
 	}
 
