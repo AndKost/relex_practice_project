@@ -12,9 +12,11 @@ import javax.persistence.*;
 public class Interview {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROGECT_SEQ")
-	@SequenceGenerator(name = "PROGECT_SEQ", sequenceName = "project_seq", 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INFO_SEQ")
+	@SequenceGenerator(name = "INFO_SEQ", sequenceName = "info_seq", 
 		initialValue = 1, allocationSize = 1)
+	@Column(name = "id", unique = true, nullable = false, insertable = true, 
+	updatable = true)
 	private int id;
 	
 	@ManyToOne(targetEntity = Admin.class, fetch = FetchType.LAZY)

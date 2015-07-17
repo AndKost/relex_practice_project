@@ -17,24 +17,25 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
+        //UserDAO userDAO = new UserDAO();
         System.out.println( "Insert start!" );
         Admin admin = new Admin();
-        admin.setLogin("admin2");
-        admin.setEmail("admin2@mail.ru");
-        admin.setFirstName("Ivan");
-        admin.setLastName("Ivanov");
-        admin.setPassword("12345");
+        admin.setLogin("admin3");
+        admin.setEmail("admin111@mail.ru");
+        admin.setFirstName("Ivan22");
+        admin.setLastName("Ivanov22");
+        admin.setPassword("1234577");
         admin.setPhone("89103494786");
         admin.setRegistrationDate(new Date());
-        //UserDAO.insertUser(admin);
+        //userDAO.insertUser(admin);
         System.out.println( "Insert finish!" );
         System.out.println( "Select start!" );
-        UserDAO userDAO = new UserDAO();
-        Person user = userDAO.getUserOfLogin("admin2");
+        /*Person user = userDAO.getUserOfLogin("admin2");
         if (user instanceof Admin)
         	printAdmin((Admin)user);
         else
-        	System.out.println("Error");
+        	System.out.println("Error");*/
+        //userDAO.changePassword(4, "54321");
         System.out.println( "Select finish!" );
     }
     

@@ -1,5 +1,7 @@
 package org.DAL.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,14 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Report")
 public class Report {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROGECT_SEQ")
-	@SequenceGenerator(name = "PROGECT_SEQ", sequenceName = "project_seq", 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INFO_SEQ")
+	@SequenceGenerator(name = "INFO_SEQ", sequenceName = "info_seq", 
 		initialValue = 1, allocationSize = 1)
 	@Column(name = "id", unique = true, nullable = false, insertable = true, 
 	updatable = true)
@@ -39,6 +43,11 @@ public class Report {
 	@JoinColumn(name = "authorId", referencedColumnName = "adminId", unique = false, 
 		nullable = false, insertable = true, updatable = false)
 	private Admin author;
+	
+	@Temporal(value = TemporalType.DATE)
+	@Column(name = "date", unique = false, nullable = false, insertable = true, 
+			updatable = true)
+	private Date date;
 	
 	@ManyToOne(targetEntity = Admin.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "interviewId", referencedColumnName = "adminId", unique = false, 

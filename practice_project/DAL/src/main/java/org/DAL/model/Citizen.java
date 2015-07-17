@@ -21,11 +21,6 @@ public class Citizen extends Person {
 			updatable = true, length = 45)
 	private String lastName;
 	
-	@Temporal(value = TemporalType.DATE)
-	@Column(name = "registrationDate", unique = false, nullable = false, insertable = true, 
-			updatable = true, length = 45)
-	private Date registrationDate;
-	
 	@Column(name = "bonusPoint", unique = false, nullable = false, insertable = true, 
 			updatable = true)
 	private long bonusPoint;
@@ -33,7 +28,7 @@ public class Citizen extends Person {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "InerviewToCitizen", joinColumns = {@JoinColumn(name = "citizenId",
 			referencedColumnName = "citizenId")}, inverseJoinColumns = {@JoinColumn(
-					name = "inretviewId", referencedColumnName = "id")})
+					name = "interviewId", referencedColumnName = "id")})
 	private List<Interview> interviews = new ArrayList<Interview>();
 	
 	public List<Interview> getInterviews() {
@@ -68,14 +63,6 @@ public class Citizen extends Person {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public Date getRegistrationDate() {
-		return registrationDate;
-	}
-
-	public void setRegistrationDate(Date registrationDate) {
-		this.registrationDate = registrationDate;
 	}
 
 	public long getBonusPoint() {

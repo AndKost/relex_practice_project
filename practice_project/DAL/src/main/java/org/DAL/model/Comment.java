@@ -9,8 +9,8 @@ import java.util.Date;
 public class Comment {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROGECT_SEQ")
-	@SequenceGenerator(name = "PROGECT_SEQ", sequenceName = "project_seq", 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMMENT_SEQ")
+	@SequenceGenerator(name = "COMMENT_SEQ", sequenceName = "comment_seq", 
 		initialValue = 1, allocationSize = 1)
 	private int id;
 	
