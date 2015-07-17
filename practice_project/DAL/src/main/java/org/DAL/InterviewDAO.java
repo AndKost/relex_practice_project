@@ -41,11 +41,9 @@ public abstract class InterviewDAO {
 	}
 	
 	/*Получение опроса по id*/
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Interview getInterviewById(long id){
-		getEntityManager().getTransaction().begin();
 		Interview result = getEntityManager().find(Interview.class, id);
-		getEntityManager().getTransaction().commit();
-		getEntityManager().close();
 		return result;
 	}
 
