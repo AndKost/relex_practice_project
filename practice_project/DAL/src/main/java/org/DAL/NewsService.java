@@ -5,7 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
-public class NewsService {
+public class NewsService extends NewsDAO {
 
 	@PersistenceContext
 	EntityManager entityManager;
@@ -15,4 +15,6 @@ public class NewsService {
 			// TODO Auto-generated method stub
 			return entityManager;
 	}
+	
+	
 }
