@@ -15,7 +15,7 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-        //UserDAO userDAO = new UserDAO();
+        UserService userDAO = new UserService();
         System.out.println( "Insert start!" );
         Admin admin = new Admin();
         admin.setLogin("admin3");
@@ -28,11 +28,11 @@ public class App
         //userDAO.insertUser(admin);
         System.out.println( "Insert finish!" );
         System.out.println( "Select start!" );
-        /*Person user = userDAO.getUserOfLogin("admin2");
+        Person user = userDAO.getUserOfLogin("admin2");
         if (user instanceof Admin)
         	printAdmin((Admin)user);
         else
-        	System.out.println("Error");*/
+        	System.out.println("Error");
         //userDAO.changePassword(4, "54321");
         System.out.println( "Select finish!" );
     }

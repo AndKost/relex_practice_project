@@ -66,7 +66,7 @@ public abstract class UserDAO {
 		Person person = getEntityManager().find(Person.class, id);
 		if (person == null)
 			return -1;
-		if (person.password.equals(oldPassword))
+		if (person.getPassword().equals(oldPassword))
 			person.setPassword(newPassword);
 		else
 			return 1;
