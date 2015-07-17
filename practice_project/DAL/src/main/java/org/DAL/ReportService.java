@@ -40,4 +40,6 @@ public class ReportService extends ReportDAO {
 		return super.getReportById(id);
 	}
 	
+	/*Выборка отчета за месяц*/
+	
 }

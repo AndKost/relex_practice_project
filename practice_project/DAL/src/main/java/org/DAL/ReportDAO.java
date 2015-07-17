@@ -1,6 +1,8 @@
 package org.DAL;
 
 
+import java.util.List;
+
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -29,6 +31,10 @@ public abstract class ReportDAO {
 		Report result = getEntityManager().find(Report.class, id);
 		return result;
 	}
-	
+	/*Выборка отчета за месяц*/
+	/*public List<Report> getReportsForMonth(){
+		
+		return 
+	}*/
 
 }
