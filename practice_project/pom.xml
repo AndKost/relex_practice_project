@@ -80,6 +80,8 @@
   <modules>
   	<module>DAL</module>
   	<module>use_module</module>
+  	
+  	<module>jsf_module</module>
   </modules>
   
         <build>
