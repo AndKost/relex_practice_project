@@ -13,30 +13,37 @@ public class CommentService extends CommentDAO {
 	@PersistenceContext
 	EntityManager entityManager;
 	@Override
-	EntityManager getEntityManager1() {
+	EntityManager getEntityManager() {
 		return entityManager;
 	}
-	
-	/*Добавление предложения*/
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void insertComment(Comment сomment) {
-		super.insertComment(сomment);
+	public void insertComment(Comment comment) {
+		super.insertComment(comment);
 	}
-	
-	/*Удаление предложения*/
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void remoteComment(int сommentId){
-		super.remoteComment(сommentId);
+	public void addComment(Comment comment, int bonus) {
+		super.addComment(comment, bonus);
 	}
-	
-	/*Начисление бонусов за голосование*/
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void incRate(long id) {
-		super.incRate(id);
+	public void voteForComment(long id, int bonus) {
+		super.voteForComment(id, bonus);
 	}
-	
-	
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Comment getCommentById(long id) {
+		return super.getCommentById(id);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void removeComment(int сommentId) {
+		super.removeComment(сommentId);
+	}
 }

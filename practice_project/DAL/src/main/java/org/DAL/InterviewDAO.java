@@ -1,53 +1,48 @@
 package org.DAL;
 
-import java.util.List;
+import org.DAL.model.Interview;
 
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.Date;
+import java.util.List;
 
-import org.DAL.model.Interview;
-import org.DAL.model.News;
 
 public abstract class InterviewDAO {
-	
-	
-	
-	/*Добавление опроса*/
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void insertInterview(Interview interview)
-	{
-		getEntityManager().persist(interview);
-	}
-	
-	/*Удаление опроса по id*/
-	public void remoteNews(int interviewId){
-		getEntityManager().getTransaction().begin();
-		Interview tmp = getEntityManager().find(Interview.class, interviewId);
-		getEntityManager().remove(tmp);
-		getEntityManager().getTransaction().commit();
-		getEntityManager().close();
-	}
-	
-	/*Выбираем все опросы*/
-	public void getAllInterviews(){
-		getEntityManager().getTransaction().begin();
-		String q = "SELECT * FROM Interview";
-		Query query = getEntityManager().createQuery(q);
-		List<News> result = query.getResultList();
-		getEntityManager().getTransaction().commit();
-		getEntityManager().close();
-	}
-	
-	/*Получение опроса по id*/
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Interview getInterviewById(long id){
-		Interview result = getEntityManager().find(Interview.class, id);
-		return result;
-	}
 
-	abstract EntityManager getEntityManager();
+    public void insertInterview(Interview interview) {
+        getEntityManager().persist(interview);
+    }
 
-	/*Изменение*/
+    public void updateInterview(Interview interview) {
+        getEntityManager().merge(interview);
+    }
+
+    public void deleteInterview(Interview interview) {
+        getEntityManager().remove(interview);
+    }
+
+    public void deleteInterviewById(long id) {
+        getEntityManager().remove(getInterviewById(id));
+    }
+
+    public Interview getInterviewById(long id) {
+        return getEntityManager().find(Interview.class, id);
+    }
+
+    public List<Interview> getAllInterviews() {
+        String queryString = "SELECT * FROM Interview";
+        Query query = getEntityManager().createQuery(queryString);
+        return (List<Interview>) query.getResultList();
+    }
+
+    public List<Interview> getCurrentInterviews(Date date) {
+        String queryString = "SELECT p FROM Interview p WHERE p.finishDate <= :date";
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("date", date);
+        return (List<Interview>) query.getResultList();
+    }
+
+    abstract EntityManager getEntityManager();
 }
+
