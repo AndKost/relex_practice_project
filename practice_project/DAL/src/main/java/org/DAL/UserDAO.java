@@ -21,7 +21,7 @@ public abstract class UserDAO {
 									   String firstName, String lastName)
 	{
 		Person person = getUserOfLogin(login);
-		if (person == null)
+		if (person != null)
 			return null;
 		Citizen citizen = new Citizen();
 		citizen.setLogin(login);
@@ -44,7 +44,7 @@ public abstract class UserDAO {
 									 String firstName, String lastName, String phone)
 	{
 		Person person = getUserOfLogin(login);
-		if (person == null)
+		if (person != null)
 			return null;
 		Admin admin = new Admin();
 		admin.setLogin(login);

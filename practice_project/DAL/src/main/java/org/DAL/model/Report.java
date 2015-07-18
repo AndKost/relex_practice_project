@@ -2,8 +2,6 @@ package org.DAL.model;
 
 import java.util.Date;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,16 +16,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "Report")
+@Table(name = "report")
 public class Report {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INFO_SEQ")
-	@SequenceGenerator(name = "INFO_SEQ", sequenceName = "info_seq", 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REPORT_SEQ")
+	@SequenceGenerator(name = "REPORT_SEQ", sequenceName = "info_seq", 
 		initialValue = 1, allocationSize = 1)
 	@Column(name = "id", unique = true, nullable = false, insertable = true, 
 	updatable = true)
-	private int id;
+	private long id;
 	
 	@Column(name = "text", unique = false, nullable = false, insertable = true, 
 			updatable = true)
@@ -58,10 +56,10 @@ public class Report {
 	
 	public Report() {}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getText() {

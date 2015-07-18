@@ -70,6 +70,13 @@
       <type>jar</type>
       <scope>runtime</scope>
     </dependency>
+    
+    <groupId>org.wildfly</groupId>
+  <artifactId>wildfly-ejb-client-bom</artifactId>
+  <version>9.0.0.Final</version>
+  <type>pom</type>
+  <scope>compile</scope>
+    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

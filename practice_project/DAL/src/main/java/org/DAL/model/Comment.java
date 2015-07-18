@@ -7,14 +7,16 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Comment")
+@Table(name = "comment")
 public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMMENT_SEQ")
 	@SequenceGenerator(name = "COMMENT_SEQ", sequenceName = "comment_seq", 
 		initialValue = 1, allocationSize = 1)
-	private int id;
+	@Column(name = "id", unique = true, nullable = false, insertable = true, 
+		updatable = true)
+	private long id;
 	
 	@Column(name = "text", unique = false, nullable = false, insertable = true, 
 			updatable = true)
@@ -45,12 +47,16 @@ public class Comment {
 					name = "citizenId", referencedColumnName = "citizenId")})
 	private List<Citizen> interviews = new ArrayList<Citizen>();
 	
+	@Column(name = "premoderation", unique = false, nullable = false, insertable = true, 
+			updatable = true)
+	private boolean premoderation;
+	
 	public Comment() {}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getText() {
@@ -82,5 +88,21 @@ public class Comment {
 	}
 	public void setInterview(Interview interview) {
 		this.interview = interview;
+	}
+
+	public List<Citizen> getInterviews() {
+		return interviews;
+	}
+
+	public void setInterviews(List<Citizen> interviews) {
+		this.interviews = interviews;
+	}
+
+	public boolean isPremoderation() {
+		return premoderation;
+	}
+
+	public void setPremoderation(boolean premoderation) {
+		this.premoderation = premoderation;
 	}
 }

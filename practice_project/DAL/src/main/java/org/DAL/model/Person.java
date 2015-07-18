@@ -2,12 +2,10 @@ package org.DAL.model;
 
 import java.util.Date;
 
-import java.util.Date;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Person")
+@Table(name = "person")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
