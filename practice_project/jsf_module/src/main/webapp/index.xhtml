@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
 <head>
    <title>JSF Tutorial!</title>
 </head>
@@ -10,5 +11,12 @@
    sdfgdfzgdzf
    #{helloWorld2.nameAdmin}
    123123123123
+   Hello, qwerty, and
+   <h:form>
+     <h:outputText value="#{user.message}" 
+          rendered="#{not empty user.message}"/>
+     <h:inputText value="#{user.admin.login}"/>
+     <h:commandButton value="Ok" action="#{user.resitrationAdmin}"/>
+   </h:form>
 </body>
 </html>
