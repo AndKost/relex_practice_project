@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UserRoles")
+@Table(name = "userRoles")
 public class UserRoles {
 	
 	@Id
@@ -27,5 +27,29 @@ public class UserRoles {
 	@Column(name = "role", unique = true, nullable = false, insertable = true, 
 			updatable = true, length = 45)
 	protected String role;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 }

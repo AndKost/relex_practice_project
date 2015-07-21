@@ -27,7 +27,7 @@ public class AdminCode {
 	private String code;
 	
 	@Temporal(value = TemporalType.TIMESTAMP)
-	@Column(name = "date", unique = false, nullable = false, insertable = true, 
+	@Column(name = "addDate", unique = false, nullable = false, insertable = true, 
 			updatable = true)
 	private Date addDate;
 	

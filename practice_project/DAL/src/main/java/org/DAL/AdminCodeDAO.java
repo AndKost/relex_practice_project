@@ -33,7 +33,8 @@ public abstract class AdminCodeDAO {
 	public void deleteCode(long id)
 	{
 		AdminCode adminCode = getEntityManager().find(AdminCode.class, id);
-		getEntityManager().remove(adminCode);
+		if (adminCode != null)
+			getEntityManager().remove(adminCode);
 	}
 	
 	abstract EntityManager getEntityManager();

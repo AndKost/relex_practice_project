@@ -7,9 +7,9 @@
     <navigation-rule>
     <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{helloWorld2.doAction}</from-action>
-            <from-outcome>ADDITION</from-outcome>
-            <to-view-id>/index.jsp</to-view-id>
+            <from-action>#{user.doAction}</from-action>
+            <from-outcome>HELLOADMIN</from-outcome>
+            <to-view-id>/faces/resources/admin/HelloAdmin.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

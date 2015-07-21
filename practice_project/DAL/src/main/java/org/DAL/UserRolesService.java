@@ -1,37 +1,41 @@
 package org.DAL;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.DAL.model.AdminCode;
+import org.DAL.model.UserRoles;
 
 @Stateless
-public class AdminCodeService extends AdminCodeDAO {
-
+public class UserRolesService extends UserRolesDAO {
+	
 	@PersistenceContext
 	EntityManager entityManager;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
-	public void addCode(String code) {
+	public void addUser(UserRoles userRole) {
 		// TODO Auto-generated method stub
-		super.addCode(code);
+		super.addUser(userRole);
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
-	public AdminCode getAdminCodeOfCode(String code) {
+	public void deleteUser(long id) {
 		// TODO Auto-generated method stub
-		return super.getAdminCodeOfCode(code);
+		super.deleteUser(id);
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
-	public void deleteCode(long id) {
+	public List<AdminCode> getUserRolesOfLogin(String login) {
 		// TODO Auto-generated method stub
-		super.deleteCode(id);
+		return super.getUserRolesOfLogin(login);
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)

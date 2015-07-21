@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.*;
 import javax.inject.Named;
@@ -14,16 +15,21 @@ import org.DAL.model.*;
 
 @SessionScoped
 @Named(value = "user") 
-public class UserController {
+public class UserController implements Serializable {
 	
 	@EJB
 	private UserService userService;
+	
 	@EJB
 	private AdminCodeService adminCodeService;
+	
 	private String resultMessage = "";
 	private Admin admin = new Admin();
 	private Citizen citizen = new Citizen();
 	private String adminCode = "";
+	
+	@PostConstruct
+	public void Init() {}
 	
 	public String getResultMessage() {
 		return resultMessage;
@@ -56,16 +62,16 @@ public class UserController {
 			resultMessage = "Пользователь с таким email уже зарегистрирован!";
 			return;
 		}
-		AdminCode tmp = adminCodeService.getAdminCodeOfCode(adminCode);
-		if (tmp == null)
+		//AdminCode tmp = adminCodeService.getAdminCodeOfCode(adminCode);
+		/*if (tmp == null)
 		{
 			resultMessage = "Введен неверный регистрационный код!";
 			return;
-		}
+		}*/
 		admin.setRegistrationDate(new Date());
 		cipherPassword(admin);
 		userService.registrationPerson(admin);
-		adminCodeService.deleteCode(tmp.getId());
+		//adminCodeService.deleteCode(tmp.getId());
 		resultMessage = "Регистрация прошла успешно!";
 	}
 	
@@ -147,6 +153,11 @@ public class UserController {
 	
 	public void setCitizen(Citizen citizen) {
 		this.citizen = citizen;
+	}
+
+	public String doAction()
+	{
+		return "HELLOADMIN";
 	}
 	
 }

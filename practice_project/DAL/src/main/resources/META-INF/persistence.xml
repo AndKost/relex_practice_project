@@ -11,8 +11,9 @@
     <class>org.DAL.model.News</class>
     <class>org.DAL.model.Report</class>
     <class>org.DAL.model.AdminCode</class>
+    <class>org.DAL.model.UserRoles</class>
     <properties>
-		<property name="hibernate.hbm2ddl.auto" value="update" />
+		<property name="hibernate.hbm2ddl.auto" value="create" />
     </properties>
   </persistence-unit>
 </persistence>
