@@ -22,7 +22,7 @@ public abstract class CommentDAO {
 
 	public void addComment(Comment comment, int bonus) {
 		insertComment(comment);
-		Person p= comment.getAuthor();
+		Person p = comment.getAuthor();
 		if (p instanceof Citizen) ((Citizen) p).setBonusPoint(((Citizen) p).getBonusPoint()+bonus);
 	}
 
@@ -40,7 +40,7 @@ public abstract class CommentDAO {
 	}
 
 	/*Удаление предложение по id*/
-	public void removeComment(int сommentId){
+	public void removeComment(long сommentId){
 		Comment tmp = getEntityManager().find(Comment.class, сommentId);
 		getEntityManager().remove(tmp);
 	}
