@@ -25,21 +25,25 @@ public class UserService extends UserDAO {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
-	public Citizen registrationCitizen(String login, String password,
-			String email, String firstName, String lastName) {
+	public void registrationPerson(Person person) {
 		// TODO Auto-generated method stub
-		return super.registrationCitizen(login, password, email, firstName, lastName);
+		super.registrationPerson(person);
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
-	public Admin registrationAdmin(String login, String password, String email,
-			String firstName, String lastName, String phone) {
+	public int checkNewPerson(Person person) {
 		// TODO Auto-generated method stub
-		return super.registrationAdmin(login, password, email, firstName, lastName,
-				phone);
+		return super.checkNewPerson(person);
 	}
-	
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@Override
+	public Person getUserOfEmail(String email) {
+		// TODO Auto-generated method stub
+		return super.getUserOfEmail(email);
+	}
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public int changePassword(long id, String oldPassword, String newPassword) {

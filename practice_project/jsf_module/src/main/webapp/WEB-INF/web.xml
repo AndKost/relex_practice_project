@@ -34,4 +34,60 @@
       <servlet-name>Faces Servlet</servlet-name>
       <url-pattern>*.xhtml</url-pattern>
    </servlet-mapping>
+   
+   <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>secureDomain</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/resources/visitor/login.xhtml</form-login-page>
+            <form-error-page>/faces/resources/visitor/loginerror.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Admin Area</web-resource-name>
+            <url-pattern>/faces/faces/resources/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Users Area</web-resource-name>
+            <url-pattern>/faces/faces/resources/user/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+            <role-name>USER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>None Protected User Area</web-resource-name>
+            <description/>
+            <url-pattern>/faces/faces/resources/visitor/*</url-pattern>
+            <url-pattern>/faces/faces/resources/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-role>  
+        <role-name>ADMIN</role-name>  
+    </security-role>
+    <security-role>  
+        <role-name>USER</role-name>  
+    </security-role> 
+   
 </web-app>

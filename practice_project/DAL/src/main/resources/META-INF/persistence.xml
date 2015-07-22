@@ -2,7 +2,9 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
   version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="Relex" transaction-type="JTA">
-  	<jta-data-source>java:/PostgresDS</jta-data-source>
+
+   <jta-data-source>java:/PostgresDS</jta-data-source> 
+
     <class>org.DAL.model.Person</class>
     <class>org.DAL.model.Admin</class>
     <class>org.DAL.model.Citizen</class>
@@ -10,8 +12,10 @@
     <class>org.DAL.model.Comment</class>
     <class>org.DAL.model.News</class>
     <class>org.DAL.model.Report</class>
+    <class>org.DAL.model.AdminCode</class>
+    <class>org.DAL.model.UserRoles</class>
     <properties>
-		
+
 		<property name="hibernate.hbm2ddl.auto" value="create" />
     </properties>
   </persistence-unit>
