@@ -67,7 +67,7 @@
       <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>9.3-1102.jdbc41</version>
-      <scope>runtime</scope>
+      <scope>provide</scope>
     </dependency>
     
     <dependency>
@@ -76,6 +76,7 @@
   <version>9.0.0.Final</version>
   <type>pom</type>
   <scope>compile</scope>
+  </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
