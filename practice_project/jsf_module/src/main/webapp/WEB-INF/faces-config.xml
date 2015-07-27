@@ -4,7 +4,6 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
-
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
@@ -12,6 +11,11 @@
             <from-outcome>index_interview</from-outcome>
             <to-view-id>/Interview/Index.xhtml</to-view-id>
             <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{user.doAction}</from-action>
+            <from-outcome>HELLOADMIN</from-outcome>
+            <to-view-id>/faces/resources/admin/HelloAdmin.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

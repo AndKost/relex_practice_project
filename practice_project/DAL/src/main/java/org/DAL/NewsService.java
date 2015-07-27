@@ -72,5 +72,10 @@ public class NewsService extends NewsDAO {
 		// TODO Auto-generated method stub
 		return entityManager;
 	}
-
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@Override
+	public List<News> getTreeLastNews() {
+		return super.getTreeLastNews();
+	}
 }

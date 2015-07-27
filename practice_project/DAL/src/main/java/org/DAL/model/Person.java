@@ -26,7 +26,7 @@ public class Person {
 	protected String email;
 	
 	@Column(name = "password", unique = false, nullable = false, insertable = true, 
-			updatable = true, length = 45)
+			updatable = true, length = 70)
 	protected String password;
 	
 	@Temporal(value = TemporalType.DATE)

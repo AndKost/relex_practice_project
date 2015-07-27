@@ -1,6 +1,5 @@
 package org.DAL;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,26 +12,28 @@ import org.DAL.model.Person;
 public abstract class UserDAO {
 
 	/*
-	 * Регистрация нового гражданина.
-	 * Возвращает объект типа Citizen, если новый гражданин зарегстрирован,
-	 * возвращает null, если логин занят.
+	 * Регистрация нового пользователя.
 	 */
-	public Citizen registrationCitizen(String login, String password, String email,
-									   String firstName, String lastName)
+	public void registrationPerson(Person person)
 	{
-		Person person = getUserOfLogin(login);
-		if (person != null)
-			return null;
-		Citizen citizen = new Citizen();
-		citizen.setLogin(login);
-		citizen.setPassword(password);
-		citizen.setEmail(email);
-		citizen.setFirstName(firstName);
-		citizen.setLastName(lastName);
-		citizen.setRegistrationDate(new Date());
-		citizen.setBonusPoint(10);
-		getEntityManager().persist(citizen);
-		return citizen;
+		getEntityManager().persist(person);
+	}
+	
+	/*
+	 * Проверяет данные нового пользователя.
+	 * Возвращает 0, если пользователь ввел коректные данные,
+	 * 1, если логин занят, 
+	 * 2, если email занят. 
+	 */
+	public int checkNewPerson(Person person)
+	{
+		Person tmp = getUserOfLogin(person.getLogin());
+		if (tmp != null)
+			return 1;
+		tmp = getUserOfEmail(person.getEmail());
+		if (tmp != null)
+			return 2;
+		return 0;
 	}
 	
 	/*
@@ -40,7 +41,7 @@ public abstract class UserDAO {
 	 * Возвращает объект типа Admin, если новый администратор зарегстрирован,
 	 * возвращает null, если логин занят.
 	 */
-	public Admin registrationAdmin(String login, String password, String email,
+	/*public Admin registrationAdmin(String login, String password, String email,
 									 String firstName, String lastName, String phone)
 	{
 		Person person = getUserOfLogin(login);
@@ -55,8 +56,7 @@ public abstract class UserDAO {
 		admin.setRegistrationDate(new Date());
 		admin.setPhone(phone);
 		getEntityManager().persist(admin);
-		return admin;
-	}
+	}*/
 	
 	/*
 	 * Изменение пароля пользователя.
@@ -86,6 +86,22 @@ public abstract class UserDAO {
 		String q = "FROM Person p WHERE p.login = :userLogin";
 		Query query = getEntityManager().createQuery(q);
 		query.setParameter("userLogin", login);
+		List<Person> result = query.getResultList();
+		if (result != null && !result.isEmpty())
+			return result.get(0);
+		else
+			return null;
+	}
+	
+	/*
+	 * Поиск пользователя по email.
+	 * Возвращает null если пользователь не найден в базе данных.
+	 */
+	public Person getUserOfEmail(String email)
+	{
+		String q = "FROM Person p WHERE p.email = :userEmail";
+		Query query = getEntityManager().createQuery(q);
+		query.setParameter("userEmail", email);
 		List<Person> result = query.getResultList();
 		if (result != null && !result.isEmpty())
 			return result.get(0);

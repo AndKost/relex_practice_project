@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.DAL.model.Admin;
 import org.DAL.model.News;
 
+
 public abstract class NewsDAO {
 	
 	/*
@@ -107,6 +108,15 @@ public abstract class NewsDAO {
 		news.setShortText(shortText);
 		return 0;
 	}
+	
+	/*Получение крайних трех записей новостей*/
+	public List<News> getTreeLastNews(){
+		String q = "SELECT * FROM news ORDER BY Date LIMIT 3";
+		Query query = getEntityManager().createQuery(q);
+		List<News> result = query.getResultList();
+		return result;
+	}
+	
 	
 	abstract EntityManager getEntityManager();
 	

@@ -34,7 +34,7 @@ public abstract class CommentDAO {
     }
 
     /*Удаление предложение по id*/
-    public void removeComment(int сommentId) {
+    public void removeComment(long сommentId) {
         Comment tmp = getEntityManager().find(Comment.class, сommentId);
         getEntityManager().remove(tmp);
     }

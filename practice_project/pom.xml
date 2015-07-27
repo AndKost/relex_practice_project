@@ -66,16 +66,17 @@
     <dependency>
       <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>8.2-504.jdbc3</version>
-      <type>jar</type>
-      <scope>runtime</scope>
+      <version>9.3-1102.jdbc41</version>
+      <scope>provide</scope>
     </dependency>
+
     <dependency>
     <groupId>org.wildfly</groupId>
   <artifactId>wildfly-ejb-client-bom</artifactId>
   <version>9.0.0.Final</version>
   <type>pom</type>
   <scope>compile</scope>
+
     </dependency>
       <dependency>
           <groupId>org.wildfly.archetype</groupId>
@@ -83,12 +84,14 @@
           <version>8.2.0.Final</version>
       </dependency>
 
-      <dependency>
+    <dependency>
+
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
   </dependencies>
   <modules>
   	<module>DAL</module>
