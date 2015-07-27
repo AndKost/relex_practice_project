@@ -2,6 +2,7 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
   version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="Relex" transaction-type="JTA">
+    <jta-data-source>java:/PostgresDS</jta-data-source>
     <class>org.DAL.model.Person</class>
     <class>org.DAL.model.Admin</class>
     <class>org.DAL.model.Citizen</class>
@@ -10,13 +11,7 @@
     <class>org.DAL.model.News</class>
     <class>org.DAL.model.Report</class>
     <properties>
-		<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/Active_citizen;create=true" />
-		<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-		<property name="hibernate.connection.username" value="postgres" />
-		<property name="hibernate.connection.password" value="1234" />
-		<property name="show_sql" value="true"/>
-		<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-		<property name="hibernate.hbm2ddl.auto" value="create" />
+		<property name="hibernate.hbm2ddl.auto" value="update" />
     </properties>
   </persistence-unit>
 </persistence>

@@ -1,14 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
 <head>
-   <title>JSF Tutorial!</title>
+    <title>JSF Tutorial!</title>
 </head>
 <body>
-   #{helloWorld2.message}
-   Hello!
-   sdfgdfzgdzf
-   #{helloWorld2.nameAdmin}
-   123123123123
+#{helloWorld2.message}
+Hello!
+sdfgdfzgdzf
+#{helloWorld2.nameAdmin}
+123123123123
+<h:form>
+    <h:commandButton value="Test navigation" action="#{helloWorld2.doAction}"/>
+    <h:commandButton value="Interviews" action="#{interviewBean.go}"/>
+</h:form>
 </body>
 </html>

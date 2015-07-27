@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Interview</title>
+</h:head>
+<h:body>
+    <h:form id="form">
+        <h3>Add interview</h3>
+        <hr/>
+        <table>
+            <tr>
+                <td>Text :</td>
+                <td><h:inputText id="text" size="10" value="#{interviewBean.interview.text}">
+                    <f:validateLength minimum="5"/>
+                    <f:ajax event="keyup" render="firstNameMsg"/>
+                </h:inputText>
+                    <h:message id="firstNameMsg" for="text" style="color: #007f85"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Start date :</td>
+                <td>
+                    <p:calendar value="#{interviewBean.interview.startDate}" locale="de" navigator="true"
+                                pattern="yyyy-MMM-dd"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Finish date :</td>
+                <td>
+                    <p:calendar value="#{interviewBean.interview.finishDate}" locale="de" navigator="true"
+                                pattern="yyyy-MMM-dd"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><h:commandButton value="Submit" action="#{interviewBean.addInterview}"/>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+
+    <h:form>
+        <h:commandButton value="Index" action="#{interviewBean.go}"/>
+    </h:form>
+</h:body>
+</html>
