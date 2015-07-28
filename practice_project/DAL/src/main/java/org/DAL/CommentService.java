@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 
 import org.DAL.model.Comment;
 
+import java.util.List;
+
 @Stateless
 public class CommentService extends CommentDAO {
 	@PersistenceContext
@@ -45,5 +47,11 @@ public class CommentService extends CommentDAO {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void removeComment(long сommentId) {
 		super.removeComment(сommentId);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Comment> getCommentsByAuthorId(long authorId) {
+		return super.getCommentsByAuthorId(authorId);
 	}
 }

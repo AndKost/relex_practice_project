@@ -2,9 +2,12 @@ package org.DAL;
 
 import org.DAL.model.Citizen;
 import org.DAL.model.Comment;
+import org.DAL.model.Interview;
 import org.DAL.model.Person;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 public abstract class CommentDAO {
 
@@ -37,5 +40,13 @@ public abstract class CommentDAO {
     public void removeComment(long сommentId) {
         Comment tmp = getEntityManager().find(Comment.class, сommentId);
         getEntityManager().remove(tmp);
+    }
+
+    public List<Comment> getCommentsByAuthorId(long authorId)
+    {
+        String queryString = "SELECT c FROM Comment c WHERE c.author.id = :authorId";
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("authorId", authorId);
+        return (List<Comment>)query.getResultList();
     }
 }

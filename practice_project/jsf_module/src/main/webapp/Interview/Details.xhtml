@@ -47,6 +47,17 @@
                 <td><f:facet name="header">Author</f:facet>
                     #{interviewBean.interview.author.id}</td>
             </tr>
+            <tr>
+                <td>Comments:</td>
+                <h:dataTable value="#{interviewBean.getCommentsById(interviewBean.viewId)}" var="allComm"
+                             styleClass="employeeTable"
+                             headerClass="employeeTableHeader"
+                             rowClasses="employeeTableOddRow,employeeTableEvenRow">
+                    <h:column>
+                        #{allComm.text}
+                    </h:column>
+                </h:dataTable>
+            </tr>
 
         </table>
     </h:form>

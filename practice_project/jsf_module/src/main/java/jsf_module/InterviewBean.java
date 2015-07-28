@@ -1,13 +1,18 @@
 package jsf_module;
 
+import org.DAL.CommentService;
 import org.DAL.InterviewService;
 import org.DAL.UserService;
 import org.DAL.model.Admin;
+import org.DAL.model.Comment;
 import org.DAL.model.Interview;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +29,9 @@ public class InterviewBean {
 
     @EJB
     UserService userService;
+
+    @EJB
+    CommentService commentService;
 
     Interview interview = new Interview();
 
@@ -70,6 +78,9 @@ public class InterviewBean {
         return "add_interview";
     }
 
+    public void validateDate(FacesContext context, UIComponent component, Object value) {
+        Date date = (Date) value;
+    }
 
     public void addInterview() {
         interview.setAuthor((Admin) userService.getUserOfLogin("admin2"));
@@ -82,6 +93,10 @@ public class InterviewBean {
 
     public void deleteInterview(long id) {
         interviewService.deleteInterviewById(id);
+    }
+
+    public List<Comment> getCommentsById(long id) {
+        return commentService.getCommentsByAuthorId(id);
     }
 
     public List<Interview> getAll() {

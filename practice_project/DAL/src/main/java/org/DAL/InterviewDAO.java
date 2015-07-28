@@ -1,9 +1,11 @@
 package org.DAL;
 
+import org.DAL.model.Comment;
 import org.DAL.model.Interview;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
