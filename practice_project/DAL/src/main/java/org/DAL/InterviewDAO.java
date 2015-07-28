@@ -28,7 +28,6 @@ public abstract class InterviewDAO {
     }
 
     public Interview getInterviewById(long id) {
-
         String queryString = "SELECT p FROM Interview p JOIN FETCH p.author WHERE p.id = :id";
         Query query = getEntityManager().createQuery(queryString);
         query.setParameter("id", id);

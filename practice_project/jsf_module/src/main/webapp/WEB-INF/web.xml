@@ -9,34 +9,34 @@
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
 
-   <!-- 
-      FacesServlet is main servlet responsible to handle all request. 
-      It acts as central controller.
-      This servlet initializes the JSF components before the JSP is displayed.
-   -->
-   <servlet>
-      <servlet-name>Faces Servlet</servlet-name>
-      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-      <load-on-startup>1</load-on-startup>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>Faces Servlet</servlet-name>
-      <url-pattern>/faces/*</url-pattern>
-   </servlet-mapping>
-   <servlet-mapping>
-      <servlet-name>Faces Servlet</servlet-name>
-      <url-pattern>*.jsf</url-pattern>
-   </servlet-mapping>
-   <servlet-mapping>
-      <servlet-name>Faces Servlet</servlet-name>
-      <url-pattern>*.faces</url-pattern>
-   </servlet-mapping>
-   <servlet-mapping>
-      <servlet-name>Faces Servlet</servlet-name>
-      <url-pattern>*.xhtml</url-pattern>
-   </servlet-mapping>
-   
-   <login-config>
+    <!--
+       FacesServlet is main servlet responsible to handle all request.
+       It acts as central controller.
+       This servlet initializes the JSF components before the JSP is displayed.
+    -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>secureDomain</realm-name>
         <form-login-config>
@@ -44,7 +44,7 @@
             <form-error-page>/faces/resources/visitor/loginerror.xhtml</form-error-page>
         </form-login-config>
     </login-config>
-    
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Protected Admin Area</web-resource-name>
@@ -57,7 +57,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Protected Users Area</web-resource-name>
@@ -71,7 +71,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>None Protected User Area</web-resource-name>
@@ -84,11 +84,11 @@
         </user-data-constraint>
     </security-constraint>
 
-    <security-role>  
-        <role-name>ADMIN</role-name>  
+    <security-role>
+        <role-name>ADMIN</role-name>
     </security-role>
-    <security-role>  
-        <role-name>USER</role-name>  
-    </security-role> 
+    <security-role>
+        <role-name>USER</role-name>
+    </security-role>
 
 </web-app>

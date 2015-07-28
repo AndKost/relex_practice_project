@@ -8,7 +8,6 @@ import org.DAL.model.Interview;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,10 +17,7 @@ import java.util.List;
 
 @RequestScoped
 @Named(value = "interviewBean")
-public class InterviewBean implements Serializable {
-
-    // @Inject
-    // Conversation conversation;
+public class InterviewBean {
 
     @EJB
     InterviewService interviewService;
@@ -58,7 +54,6 @@ public class InterviewBean implements Serializable {
         this.interview = interview;
     }
 
-
     public String editInterview() {
         return "edit_interview";
     }
@@ -72,7 +67,6 @@ public class InterviewBean implements Serializable {
     }
 
     public String add() {
-        interview = new Interview();
         return "add_interview";
     }
 
@@ -93,5 +87,4 @@ public class InterviewBean implements Serializable {
     public List<Interview> getAll() {
         return interviewService.getAllInterviews();
     }
-
 }

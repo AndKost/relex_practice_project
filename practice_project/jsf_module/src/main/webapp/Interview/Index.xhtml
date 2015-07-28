@@ -3,53 +3,53 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
-<head>
+<h:head>
     <title>Interview</title>
-</head>
-<body>
+</h:head>
+<h:body>
 
-<h:form>
-    <h:dataTable value="#{interviewBean.all}" var="all"
-                 styleClass="employeeTable"
-                 headerClass="employeeTableHeader"
-                 rowClasses="employeeTableOddRow,employeeTableEvenRow">
-        <h:column>
-            <f:facet name="header">Start date</f:facet>
-            #{all.startDate}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Finish date</f:facet>
-            #{all.finishDate}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Title</f:facet>
-            #{all.id}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Text</f:facet>
-            #{all.text}
-        </h:column>
-        <h:column>
-        <f:facet name="header">Details</f:facet>
-        <h:commandButton value="Details" action="#{interviewBean.detailsInterview}">
+    <h:form>
+        <h:dataTable value="#{interviewBean.all}" var="all"
+                     styleClass="employeeTable"
+                     headerClass="employeeTableHeader"
+                     rowClasses="employeeTableOddRow,employeeTableEvenRow">
+            <h:column>
+                <f:facet name="header">Start date</f:facet>
+                #{all.startDate}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Finish date</f:facet>
+                #{all.finishDate}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Title</f:facet>
+                #{all.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Text</f:facet>
+                #{all.text}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Details</f:facet>
+                <h:commandButton value="Details" action="#{interviewBean.detailsInterview}">
+                    <f:setPropertyActionListener value="#{all.id}" target="#{interviewBean.viewId}"/>
+                </h:commandButton>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:commandButton value="Edit" action="#{interviewBean.editInterview}">
+                    <f:setPropertyActionListener value="#{all.id}" target="#{interviewBean.viewId}"/>
+                </h:commandButton>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandButton value="Delete" action="#{interviewBean.deleteInterview(all.id)}">
+                </h:commandButton>
+            </h:column>
+        </h:dataTable>
+    </h:form>
 
-        </h:commandButton>
-    </h:column>
-    <h:column>
-            <f:facet name="header">Edit</f:facet>
-            <h:commandButton value="Edit" action="#{interviewBean.editInterview}">
-                <f:setPropertyActionListener value="#{all.id}" target="#{interviewBean.viewId}"/>
-            </h:commandButton>
-    </h:column>
-    <h:column>
-            <f:facet name="header">Delete</f:facet>
-            <h:commandButton value="Delete" action="#{interviewBean.deleteInterview(all.id)}">
-            </h:commandButton>
-    </h:column>
-    </h:dataTable>
-</h:form>
-
-<h:form>
-    <h:commandButton value="Add Interview" action="#{interviewBean.add}" /></h:form>
-</body>
+    <h:form>
+        <h:commandButton value="Add Interview" action="#{interviewBean.add}"/></h:form>
+</h:body>
 </html>

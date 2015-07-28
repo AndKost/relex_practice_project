@@ -71,5 +71,14 @@
         </navigation-case>
     </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>/Interview/Edit.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{interviewBean.go}</from-action>
+            <from-outcome>index_interview</from-outcome>
+            <to-view-id>/Interview/Index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 
 </faces-config>
