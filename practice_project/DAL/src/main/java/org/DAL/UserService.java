@@ -30,12 +30,12 @@ public class UserService extends UserDAO {
 		super.registrationPerson(person);
 	}
 
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	/*@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public int checkNewPerson(Person person) {
 		// TODO Auto-generated method stub
 		return super.checkNewPerson(person);
-	}
+	}*/
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override

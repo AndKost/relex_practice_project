@@ -24,7 +24,7 @@ public class UserRoles {
 			updatable = true, length = 45)
 	protected String login;
 	
-	@Column(name = "role", unique = true, nullable = false, insertable = true, 
+	@Column(name = "role", unique = false, nullable = false, insertable = true, 
 			updatable = true, length = 45)
 	protected String role;
 

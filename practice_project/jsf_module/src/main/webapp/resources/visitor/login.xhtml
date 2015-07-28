@@ -4,28 +4,16 @@
       xmlns:p="http://primefaces.org/ui" 
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>Login Form</title>
+        <title>Вход</title>
     </h:head>
     <h:body>
-        <p:panel header="Login From">
-            <!--       <form method="POST" action="j_security_check">
-                       Username: <input type="text" name="j_username" />
-                       Password: <input type="password" name="j_password" />
+        <p:panel header="Вход на сайт">
+                 <form method="post" action="j_security_check">
+                       Логин: <input type="text" name="j_username" />
+                       Пароль: <input type="password" name="j_password" />
                        <br />
-                       <input type="submit" value="Login" />
-                       <input type="reset" value="Reset" />
-                   </form> -->
-
-
-            <h:form id="loginForm" onsubmit="document.loginForm.action = 'j_security_check';">  
-                <h:outputLabel value="Username"></h:outputLabel>  
-                <input name="j_username" type="text" />  
-                <h:outputLabel value="Passwort"></h:outputLabel>  
-                <input name="j_password" size="15" type="password" />  
-                <h:commandButton value="Anmelden"></h:commandButton>  
-            </h:form>  
-
-
+                       <input type="submit" value="Войти" />
+                   </form> 
         </p:panel>
     </h:body>
 </html>

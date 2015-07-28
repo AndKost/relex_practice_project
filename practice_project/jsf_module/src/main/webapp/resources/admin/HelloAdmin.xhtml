@@ -2,10 +2,12 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
-      <head>
+      <h:head>
    <title>Admin</title>
-</head>
-<body>
+</h:head>
+<h:body>
 Hello, admin!
-</body>
+<h:commandButton value="Выйти" action="#{log.logout}"/>
+<h:outputText value="#{user.userLogin}" />
+</h:body>
 </html>

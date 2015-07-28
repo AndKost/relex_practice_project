@@ -1,11 +1,96 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-      <head>
-   <title>Регистрация</title>
-</head>
-<body>
-Регистрация
-</body>
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:p="http://primefaces.org/ui">
+	<h:head>
+    	<title>Регистрация</title>
+	</h:head>
+  
+	<h:body>
+		<h:form>
+			<p:growl showDetail="false" sticky="true" />
+			<p:panel header="Регистрация">
+				<p:panelGrid columns="3">
+					<h:outputText  value = "Логин:"/>
+					<p:inputText id = "login" value = "#{user.admin.login}"
+						 validator="#{user.checkLogin}"
+					     requiredMessage="Введите логин" 
+					     required="true">
+						<p:ajax event="keyup" delay="500" update="loginMess"/>
+					</p:inputText>
+					<p:message for="login" id="loginMess"/>
+					
+					<h:outputText  value = "Пароль:" />
+					<p:password id = "password" value = "#{user.admin.password}" 
+						 validator="#{user.checkPassword}"
+					     requiredMessage="Введите пароль"
+					     required="true">
+						<p:ajax event="keyup" delay="500" update="passwordMess" />
+					</p:password>
+					<p:message id="passwordMess" for="password"/>
+					
+					<h:outputText  value = "Повторить пароль:" />
+					<p:password id = "repeatPassword" value = "#{user.repeatPassword}"
+						 validator="#{user.checkRepeatPasswordAdmin}" 
+					     requiredMessage="Введите пароль"
+					     required="true">
+						<p:ajax event="keyup" delay="500" update="repeatPasswordMess"/>
+					</p:password>
+					<p:message id="repeatPasswordMess" for="repeatPassword"/>
+					
+					<h:outputText  value = "Электронная почта:" />
+					<p:inputText id = "email" value = "#{user.admin.email}"
+						 validator="#{user.checkEmail}" 
+					     requiredMessage="Введите электронную почту"
+					     required="true">
+						<p:ajax event="keyup" delay="500" update="emailMess"/>
+					</p:inputText>
+					<p:message id="emailMess" for="email"/>
+					
+					<h:outputText  value = "Имя:" />
+					<p:inputText id = "name" value = "#{user.admin.firstName}"
+						 requiredMessage="Введите имя" 
+					     required="true">
+						<p:ajax event="keyup" delay="500" update="nameMess"/>
+					</p:inputText>
+					<p:message id="nameMess" for="name"/>
+					
+					<h:outputText  value = "Фамилия:" />
+					<p:inputText id = "lastName" value = "#{user.admin.lastName}" 
+					     requiredMessage="Введите фамилию"
+					     required="true">
+						<f:ajax event="keyup" delay="500" update="lastNameMess"/>
+					</p:inputText>
+					<p:message id="lastNameMess" for="lastName"/>
+					
+					<h:outputText  value = "Номер телефона:" />
+					<p:inputText id = "phone" value = "#{user.admin.phone}" 
+					     requiredMessage="Введите номер телефона"
+					     required="true">
+						<f:ajax event="keyup" delay="500" update="phoneMess"/>
+					</p:inputText>
+					<p:message id="phoneMess" for="phone"/>
+					
+					<h:outputText  value = "Регистрационный ключ:" />
+					<p:inputText id = "adminCode" value = "#{user.adminCode}" 
+						 validator="#{user.checkAdminCode}"
+					     requiredMessage="Введите рагистрационный ключ"
+					     required="true">
+					</p:inputText>
+					<p:message id="adminCodeMess" for="adminCode"/>
+					
+				</p:panelGrid>
+				<p:commandButton value="Зарегестрироваться" ajax="false" 
+					action="#{user.registrationAdmin}"/>
+			</p:panel>
+		</h:form>
+		<p:commandButton value="Отмена" ajax="true" action="#{user.cancel}"/>
+		<p:commandButton value="Войти" ajax="true" action="#{user.toLogin}"/>
+	</h:body>
+  
 </html>

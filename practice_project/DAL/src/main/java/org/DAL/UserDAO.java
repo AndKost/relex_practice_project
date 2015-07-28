@@ -25,7 +25,7 @@ public abstract class UserDAO {
 	 * 1, если логин занят, 
 	 * 2, если email занят. 
 	 */
-	public int checkNewPerson(Person person)
+	/*public int checkNewPerson(Person person)
 	{
 		Person tmp = getUserOfLogin(person.getLogin());
 		if (tmp != null)
@@ -34,7 +34,7 @@ public abstract class UserDAO {
 		if (tmp != null)
 			return 2;
 		return 0;
-	}
+	}*/
 	
 	/*
 	 * Регистрация нового администратора.
@@ -119,11 +119,16 @@ public abstract class UserDAO {
 		Admin admin = getEntityManager().find(Admin.class, id);
 		if (admin == null)
 			return -1;
-		admin.setEmail(email);
+		Person tmp = getUserOfEmail(email);
+		int resultCode = 0;
+		if (tmp != null)
+			resultCode = 1;
+		else
+			admin.setEmail(email);
 		admin.setFirstName(firstName);
 		admin.setLastName(lastName);
 		admin.setPhone(phone);
-		return 0;
+		return resultCode;
 	}
 	
 	/*
@@ -133,14 +138,18 @@ public abstract class UserDAO {
 	 */
 	public int changeInfoCitizen(long id, String firstName, String lastName, String email)
 	{
-		getEntityManager().getTransaction().begin();
 		Citizen citizen = getEntityManager().find(Citizen.class, id);
 		if (citizen == null)
 			return -1;
-		citizen.setEmail(email);
+		Person tmp = getUserOfEmail(email);
+		int resultCode = 0;
+		if ((tmp != null) && (tmp.getId() != id))
+			resultCode = 1;
+		else
+			citizen.setEmail(email);
 		citizen.setFirstName(firstName);
 		citizen.setLastName(lastName);
-		return 0;
+		return resultCode;
 	}
 	
 	public void changeBonusPoint(long id, long bonusPoint)
