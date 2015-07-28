@@ -43,7 +43,7 @@ public class CommentService extends CommentDAO {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void removeComment(int сommentId) {
+	public void removeComment(long сommentId) {
 		super.removeComment(сommentId);
 	}
 }

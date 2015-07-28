@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<f:view>
+    <f:metadata>
+        <f:viewParam name="id" value="#{interviewBean.viewId}"/>
+    </f:metadata>
+</f:view>
+
+<h:head>
+    <title>Interview</title>
+</h:head>
+<h:body>
+
+    <h:form id="form">
+        <hr/>
+        <table>
+            <tr>
+                <td>Start date :</td>
+                <td><f:facet name="header">Start date</f:facet>
+                    #{interviewBean.interview.startDate}
+                </td>
+            </tr>
+            <tr>
+                <td>Finish date :</td>
+                <td>
+                    <f:facet name="header">Finish date</f:facet>
+                    #{interviewBean.interview.finishDate}
+                </td>
+            </tr>
+            <tr>
+                <td>Id :</td>
+                <td>
+                    <f:facet name="header">Id</f:facet>
+                    #{interviewBean.interview.id}
+                </td>
+            </tr>
+            <tr>
+                <td>Text:</td>
+                <td><f:facet name="header">Text</f:facet>
+                    #{interviewBean.interview.text}</td>
+            </tr>
+            <tr>
+                <td>Author:</td>
+                <td><f:facet name="header">Author</f:facet>
+                    #{interviewBean.interview.author.id}</td>
+            </tr>
+
+        </table>
+    </h:form>
+
+    <h:form>
+        <h:commandButton value="Index" action="#{interviewBean.go}"/>
+    </h:form>
+
+</h:body>
+</html>

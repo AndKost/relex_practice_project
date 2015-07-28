@@ -23,15 +23,20 @@ public abstract class InterviewDAO {
     }
 
     public void deleteInterviewById(long id) {
-        getEntityManager().remove(getInterviewById(id));
+        Interview i = getEntityManager().find(Interview.class, id);
+        if (i != null) getEntityManager().remove(i);
     }
 
     public Interview getInterviewById(long id) {
-        return getEntityManager().find(Interview.class, id);
+        String queryString = "SELECT p FROM Interview p JOIN FETCH p.author WHERE p.id = :id";
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("id", id);
+        Interview l = (Interview) query.getSingleResult();
+        return l;
     }
 
     public List<Interview> getAllInterviews() {
-        String queryString = "SELECT * FROM Interview";
+        String queryString = "SELECT p FROM Interview p";
         Query query = getEntityManager().createQuery(queryString);
         return (List<Interview>) query.getResultList();
     }
