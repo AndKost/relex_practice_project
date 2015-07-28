@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:p="http://primefaces.org/ui">
+	<h:head>
+    	<title>Личный кабинет</title>
+	</h:head>
+  
+	<h:body>
+		<h:form id="panel">
+			<p:growl showDetail="true" sticky="false" life="2000"/>
+			<p:panel header="Личный кабинет">
+				<p:panelGrid columns="2">
+					<h:outputText value="Имя" />
+					<p:inputText value="#{viewDate.citizen.firstName}" 
+						readonly="#{not viewDate.changeDate}"/>
+					
+					<h:outputText value="Фамилия" />
+					<p:inputText value="#{viewDate.citizen.lastName}" 
+						readonly="#{not viewDate.changeDate}"/>
+					
+					<h:outputText value="Электронная почта" />
+					<p:inputText value="#{viewDate.citizen.email}" 
+						readonly="#{not viewDate.changeDate}"/>
+						
+					<h:outputText value="Бонусные баллы" />
+					<p:inputText value="#{viewDate.citizen.bonusPoint}" 
+						readonly="true"/>
+						
+				</p:panelGrid>
+				<p:commandButton value="Редактировать" ajax="true" action="#{viewDate.edit}"
+									update="panel" immediate="true"
+									rendered="#{not viewDate.changeDate}"/>
+				<p:commandButton value="Сохранить" ajax="true"
+							action="#{viewDate.saveCitizen}" rendered="#{viewDate.changeDate}"
+							update="panel"/>
+				<p:commandButton value="На главную страницу" ajax="false"/>
+			</p:panel>
+		</h:form>
+	</h:body>
+  
+</html>

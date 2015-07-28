@@ -1,7 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
 <head>
    <title>JSF Tutorial!</title>
 </head>
@@ -9,9 +13,13 @@
    Hello!
    sdfgdfzgdzf
    123123123123
-   Hello, qwerty, and
+   Hello, qwerty, and <br/>
    <h:form>
+   	 <h:outputText value="#{user.userLogin}" />
      <h:commandButton value="Ok" action="#{user.doAction}"/>
-   </h:form>
+     <h:commandButton value="regist" action="#{user.newCitizen}"/>
+     <h:commandButton value="Войти" action="#{user.toLogin}"/>
+     <h:commandButton value="Выйти" action="#{log.logout}"/>
+   </h:form> 
 </body>
 </html>

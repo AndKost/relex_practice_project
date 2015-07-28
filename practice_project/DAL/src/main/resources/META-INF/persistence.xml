@@ -13,7 +13,7 @@
     <class>org.DAL.model.AdminCode</class>
     <class>org.DAL.model.UserRoles</class>
     <properties>
-		<property name="hibernate.hbm2ddl.auto" value="create" />
+		<property name="hibernate.hbm2ddl.auto" value="update" />
     </properties>
   </persistence-unit>
 </persistence>

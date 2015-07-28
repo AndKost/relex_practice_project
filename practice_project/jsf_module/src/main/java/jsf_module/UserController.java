@@ -4,14 +4,23 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.*;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.DAL.*;
 import org.DAL.model.*;
+import org.omg.CORBA.Request;
+import org.primefaces.context.RequestContext;
 
 @SessionScoped
 @Named(value = "user") 
@@ -23,7 +32,17 @@ public class UserController implements Serializable {
 	@EJB
 	private AdminCodeService adminCodeService;
 	
-	private String resultMessage = "";
+	@EJB
+	private UserRolesService userRolesService;
+	
+	//@Inject
+	//private CheckController checkController;
+	
+	
+	/*@NotNull(message = "Введите имя")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]$", message = "Логин содержит недопустимые сымволы")
+    @Size(min = 3, max = 15, message = "Логин должен содержать от 3 до 15 символов")*/
+	private String repeatPassword = "";
 	private Admin admin = new Admin();
 	private Citizen citizen = new Citizen();
 	private String adminCode = "";
@@ -31,48 +50,162 @@ public class UserController implements Serializable {
 	@PostConstruct
 	public void Init() {}
 	
-	public String getResultMessage() {
-		return resultMessage;
+	public void checkLogin(FacesContext facesContext, UIComponent component, Object value)
+		throws ValidatorException
+	{
+		String login = (String) value;
+		if (login.equals(""))
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Введите логин"));
+		String regex = "^[a-zA-Z0-9_-]+$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(login);
+		if (!matcher.matches())
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Логин содержит недопустимые символы"));
+		if (login.length() < 3 || login.length() > 25)
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Логин должен сожержать от 3 до 15 символов"));
+		Person person = userService.getUserOfLogin(login);
+		if (person != null)
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Логин уже занят"));
 	}
 	
-	public void setResultMessage(String resultMessage) {
-		this.resultMessage = resultMessage;
+	public void checkPassword(FacesContext facesContext, UIComponent component, Object value)
+			throws ValidatorException
+	{
+		String password = (String) value;
+		if (password.equals(""))
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Введите пароль"));
+		if (password.length() < 6 || password.length() > 25)
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Пароль должен сожержать от 6 до 15 символов"));
+	}
+	
+	public void checkRepeatPasswordAdmin(FacesContext facesContext, UIComponent component, Object value)
+			throws ValidatorException
+	{
+		String password = (String) value;
+		if (password.equals(""))
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Введите пароль")); 
+		if (!password.equals(admin.getPassword()))
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Пароли не совпадают"));
+	}
+	
+	public void checkRepeatPasswordCitizen(FacesContext facesContext, UIComponent component, Object value)
+			throws ValidatorException
+	{
+		String password = (String) value;
+		if (password.equals(""))
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Введите пароль"));
+		if (!password.equals(citizen.getPassword()))
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Пароли не совпадают"));
+	}
+	
+	public void checkEmail(FacesContext facesContext, UIComponent component, Object value)
+			throws ValidatorException
+	{
+		String email = (String) value;
+		String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(email);
+		if (!matcher.matches())
+			throw new ValidatorException(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Электронная почта имеет не верный формат"));
+	}
+	
+	public void checkAdminCode(FacesContext facesContext, UIComponent component, Object value)
+			throws ValidatorException
+	{
+		AdminCode tmp = adminCodeService.getAdminCodeOfCode(adminCode);
+		if (tmp == null)
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", 
+							"Введен неверный регистрационный ключ"));
+	}
+	
+	public String getRepeatPassword() {
+		return repeatPassword;
+	}
+	
+	public void setRepeatPassword(String repeatPassword) {
+		this.repeatPassword = repeatPassword;
 	}
 
-	public void resitrationAdmin()
+	public String registrationAdmin()
 	{
-		resultMessage = "";
-		checkPersonInfo(admin);
-		if (!resultMessage.equals(""))
-			return;
-		if (admin.getEmail().equals("") || admin.getFirstName().equals("") ||
-				admin.getLastName().equals("") || admin.getPhone().equals(""))
+		AdminCode tmp = adminCodeService.getAdminCodeOfCode(adminCode);
+		if (tmp == null)
 		{
-			resultMessage = "Заполните все поля!";
-			return;
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка регистрации", 
+							"Повториту попытку"));
+			return "";
 		}
-		int resultCode = userService.checkNewPerson(admin);
-		if (resultCode == 1)
-		{
-			resultMessage = "Логин занят, введите новый!";
-			return;
-		}
-		if (resultCode == 2)
-		{
-			resultMessage = "Пользователь с таким email уже зарегистрирован!";
-			return;
-		}
-		//AdminCode tmp = adminCodeService.getAdminCodeOfCode(adminCode);
-		/*if (tmp == null)
-		{
-			resultMessage = "Введен неверный регистрационный код!";
-			return;
-		}*/
 		admin.setRegistrationDate(new Date());
-		cipherPassword(admin);
-		userService.registrationPerson(admin);
-		//adminCodeService.deleteCode(tmp.getId());
-		resultMessage = "Регистрация прошла успешно!";
+		try
+		{
+			userService.registrationPerson(admin);
+			adminCodeService.deleteCode(tmp.getId());
+		} catch (Exception ex)
+		{
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка регистрации", 
+							"Повториту попытку"));
+			return "";
+		}
+		UserRoles userRole = new UserRoles();
+		userRole.setLogin(admin.getLogin());
+		userRole.setRole("ADMIN");
+		userRolesService.addUser(userRole);
+		admin = new Admin();
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Регистрация прошла успешно", 
+						null));
+		return "faces/index?faces-redirect=true";
+	}
+	
+	public String toHome()
+	{
+		return "HOME";
+	}
+	
+	public String toLogin()
+	{
+		return "LOGIN";
+	}
+	
+	public String cancel()
+	{
+		citizen.setFirstName("SERGFDSA");
+		return "index.xhtml?faces-redirect=true";
+	}
+	
+	public String newCitizen()
+	{
+		return "REGISTCITIZEN";
+	}
+	
+	public String newAdmin()
+	{
+		return "REGISTADMIN";
 	}
 	
 	private void cipherPassword(Person newPerson)
@@ -90,53 +223,40 @@ public class UserController implements Serializable {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
+		/*String encodePassword;
+		Base64Encoder ww = new Base64Encoder();
+		try {
+			encodePassword = Base64Encoder.encode(newPerson.getPassword());
+			newPerson.setPassword(encodePassword);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			adminCode  = "ERROR";
+			e.printStackTrace();
+		}*/
 	}
 	
-	public void resitrationCitizen()
+	public String registrationCitizen()
 	{
-		resultMessage = "";
-		checkPersonInfo(citizen);
-		if (!resultMessage.equals(""))
-			return;
-		if (citizen.getEmail().equals("") || citizen.getFirstName().equals("") ||
-			citizen.getLastName().equals(""))
-		{
-			resultMessage = "Заполните все поля!";
-			return;
-		}
-		int resultCode = userService.checkNewPerson(citizen);
-		if (resultCode == 1)
-		{
-			resultMessage = "Логин занят, введите новый!";
-			return;
-		}
-		if (resultCode == 2)
-		{
-			resultMessage = "Пользователь с таким email уже зарегистрирован!";
-			return;
-		}
 		citizen.setRegistrationDate(new Date());
-		userService.registrationPerson(citizen);
-		resultMessage = "Регистрация прошла успешно!";
-	}
-	
-	private void checkPersonInfo(Person person)
-	{
-		if (person.getLogin().equals("") || person.getLogin().length() > 15)
+		try
 		{
-			resultMessage = "Длина логина должна быть в диапозоне от 1 до 15 символов!";
-			return;
-		}
-		if (person.getPassword().length() < 6)
+			userService.registrationPerson(citizen);
+		} catch (Exception ex)
 		{
-			resultMessage = "Длина пароля должна быть не менее 6 символов!";
-			return;
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка регистрации", 
+							"Повториту попытку"));
+			return "";
 		}
-		if (person.getPassword().length() > 20)
-		{
-			resultMessage = "Длина пароля не должна превышать 20 символов!";
-			return;
-		}
+		UserRoles userRole = new UserRoles();
+		userRole.setLogin(citizen.getLogin());
+		userRole.setRole("USER");
+		userRolesService.addUser(userRole);
+		citizen = new Citizen();
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Регистрация прошла успешно", 
+						null));
+		return "HOME";
 	}
 	
 	public Admin getAdmin() {
@@ -158,6 +278,25 @@ public class UserController implements Serializable {
 	public String doAction()
 	{
 		return "HELLOADMIN";
+	}
+
+	public String getAdminCode() {
+		return adminCode;
+	}
+
+	public void setAdminCode(String adminCode) {
+		this.adminCode = adminCode;
+	}
+	
+	public String getUserLogin()
+	{
+		//FacesContext facesContext = FacesContext.getCurrentInstance();
+		//HttpSession httpSession = (HttpSession)facesContext.getExternalContext().getSession(false);
+		String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+		if (login == null)
+			return "Гость";
+		else
+			return login;
 	}
 	
 }

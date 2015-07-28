@@ -20,7 +20,7 @@ public abstract class AdminCodeDAO {
 	
 	public AdminCode getAdminCodeOfCode(String code)
 	{
-		String q = "FROM adminCode a WHERE a.code = :code";
+		String q = "FROM AdminCode a WHERE a.code = :code";
 		Query query = getEntityManager().createQuery(q);
 		query.setParameter("code", code);
 		List<AdminCode> result = query.getResultList();
