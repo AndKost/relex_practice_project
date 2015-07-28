@@ -11,7 +11,7 @@
     <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
-<body>
+<h:body>
 
 <div id="top-header">
     <h1>Активный гражданин Воронеж</h1>
@@ -27,8 +27,10 @@
 
 
         <div class="reg-block">
-            <a href="#">Регистрация</a>
-            <a href="#">Вход</a>
+            <h:form>
+                <h:commandLink value="Регистрация" action="#{user.newCitizen}"/>
+                <h:commandLink value="Вход на сайт" action="#{user.toLogin}"/>
+            </h:form>
 
             <div class="clear_float"></div>
         </div>
@@ -131,7 +133,8 @@
 <h:form>
     <p>Test button</p>
     <h:commandButton value="Interviews" action="#{interviewBean.go}"/>
+    <h:commandLink value="Вход в личный кабинет" action="#{user.toPersonalLayer}"/>
 </h:form>
 
-</body>
+</h:body>
 </html>

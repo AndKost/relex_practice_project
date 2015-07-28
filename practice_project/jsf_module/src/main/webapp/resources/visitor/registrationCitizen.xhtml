@@ -68,12 +68,9 @@
 				</p:panelGrid>
 				<p:commandButton id="regist" value="Зарегестрироваться" ajax="false" 
 					action="#{user.registrationCitizen}"/>
-		<p:commandButton value="Войти" ajax="fasle" type="button" action="#{user.toLogin}"/>
-		<p:commandButton value="Отмена" ajax="false" type="button" action="#{user.cancel}"/>
+		<p:commandButton value="Back" ajax="false" immediate="true" action="#{user.cancel}"/>
 		<br/>
-		<p:commandLink action="/faces/resources/visitor/registrationCitizen.xhtml">
-        	<h:outputText value="Загеристрироваться как администратор" />
-    	</p:commandLink>
+		<p:commandLink value="Загеристрироваться как администратор" immediate="true" action="#{user.newAdmin}" />
 			</p:panel>
 		</h:form>
 	</h:body>

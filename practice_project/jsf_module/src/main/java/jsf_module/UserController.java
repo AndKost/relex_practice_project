@@ -194,8 +194,7 @@ public class UserController implements Serializable {
 	
 	public String cancel()
 	{
-		citizen.setFirstName("SERGFDSA");
-		return "index.xhtml?faces-redirect=true";
+		return "BACK_HOME";
 	}
 	
 	public String newCitizen()
@@ -275,6 +274,11 @@ public class UserController implements Serializable {
 		this.citizen = citizen;
 	}
 
+	public String toPersonalLayer()
+	{
+		return "PERSONAL_LAYER";
+	}
+
 	public String doAction()
 	{
 		return "HELLOADMIN";
@@ -298,5 +302,7 @@ public class UserController implements Serializable {
 		else
 			return login;
 	}
-	
+
+
+
 }

@@ -39,7 +39,7 @@
 				<p:commandButton value="Сохранить" ajax="true"
 							action="#{viewDate.saveCitizen}" rendered="#{viewDate.changeDate}"
 							update="panel"/>
-				<p:commandButton value="На главную страницу" ajax="false"/>
+				<p:commandButton value="На главную страницу" ajax="false" immediate="true" action="#{user.toHome}"/>
 			</p:panel>
 		</h:form>
 	</h:body>
