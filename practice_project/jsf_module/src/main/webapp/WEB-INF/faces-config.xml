@@ -7,19 +7,31 @@
     <navigation-rule>
     <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{user.doAction}</from-action>
-            <from-outcome>HELLOADMIN</from-outcome>
+            <from-outcome>VIEWDATACITIZEN</from-outcome>
             <to-view-id>/faces/resources/user/personalAreaCitizen.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>VIEWDATAADMIN</from-outcome>
+            <to-view-id>/faces/resources/admin/personalAreaAdmin.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
-    <from-view-id>/faces/faces/resources/visitor/registrationCitizen.xhtml</from-view-id>
+    <from-view-id>/faces/resources/*</from-view-id>
         <navigation-case>
-            <from-action>#{user.registrationCitizen}</from-action>
-            <from-outcome>HOME</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
+            <from-outcome>LOGOUT</from-outcome>
+            <to-view-id>/faces/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+    <from-view-id>/faces/resources/user/personalAreaCitizen.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>VIEWDATA_HOME</from-outcome>
+            <to-view-id>/faces/index.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -27,9 +39,8 @@
     <navigation-rule>
     <from-view-id>/faces/faces/resources/visitor/registrationCitizen.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{user.cancel}</from-action>
             <from-outcome>CANCEL</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
+            <to-view-id>/faces/index.xhtml?faces-redirect=true</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -37,19 +48,8 @@
     <navigation-rule>
     <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{user.newCitizen}</from-action>
             <from-outcome>REGISTCITIZEN</from-outcome>
-            <to-view-id>/faces/resources/visitor/registrationAdmin.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-    <from-view-id>/faces/resources/visitor/registrationAdmin.xhtml</from-view-id>
-        <navigation-case>
-            <from-action>#{user.toLogin}</from-action>
-            <from-outcome>LOGIN</from-outcome>
-            <to-view-id>/faces/resources/visitor/login.xhtml</to-view-id>
+            <to-view-id>/faces/resources/visitor/registrationCitizen.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -57,17 +57,15 @@
     <navigation-rule>
     <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{user.toLogin}</from-action>
             <from-outcome>LOGIN</from-outcome>
             <to-view-id>/faces/resources/visitor/login.xhtml</to-view-id>
-            <redirect/>
+            <redirect />
         </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
     <from-view-id>/faces/resources/visitor/registrationCitizen.xhtml</from-view-id>
         <navigation-case>
-        	<from-action>#{user.newAdmin}</from-action>
             <from-outcome>REGISTADMIN</from-outcome>
             <to-view-id>/faces/resources/visitor/registrationAdmin.xhtml</to-view-id>
             <redirect/>

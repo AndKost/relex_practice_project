@@ -44,4 +44,23 @@ public abstract class CommentDAO {
 		Comment tmp = getEntityManager().find(Comment.class, сommentId);
 		getEntityManager().remove(tmp);
 	}
+	
+	public int changeBonusPoint(long idUser, long bonusPoint)
+	{
+		Citizen citizen = getEntityManager().find(Citizen.class, idUser);
+		if (citizen == null)
+			return -1;
+		citizen.setBonusPoint(citizen.getBonusPoint() + bonusPoint);
+		return 0;
+	}
+	
+	public List<Comment> getCommentForPremoderation()
+	{
+		List<Comment> result;
+		String q = "FROM Comment c WHERE c.premoderation = fasle";
+		Query query = getEntityManager().createQuery(q);
+		result = query.getResultList();
+		return result;
+	}
+	
 }

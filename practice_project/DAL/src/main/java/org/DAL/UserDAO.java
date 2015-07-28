@@ -20,45 +20,6 @@ public abstract class UserDAO {
 	}
 	
 	/*
-	 * Проверяет данные нового пользователя.
-	 * Возвращает 0, если пользователь ввел коректные данные,
-	 * 1, если логин занят, 
-	 * 2, если email занят. 
-	 */
-	/*public int checkNewPerson(Person person)
-	{
-		Person tmp = getUserOfLogin(person.getLogin());
-		if (tmp != null)
-			return 1;
-		tmp = getUserOfEmail(person.getEmail());
-		if (tmp != null)
-			return 2;
-		return 0;
-	}*/
-	
-	/*
-	 * Регистрация нового администратора.
-	 * Возвращает объект типа Admin, если новый администратор зарегстрирован,
-	 * возвращает null, если логин занят.
-	 */
-	/*public Admin registrationAdmin(String login, String password, String email,
-									 String firstName, String lastName, String phone)
-	{
-		Person person = getUserOfLogin(login);
-		if (person != null)
-			return null;
-		Admin admin = new Admin();
-		admin.setLogin(login);
-		admin.setPassword(password);
-		admin.setEmail(email);
-		admin.setFirstName(firstName);
-		admin.setLastName(lastName);
-		admin.setRegistrationDate(new Date());
-		admin.setPhone(phone);
-		getEntityManager().persist(admin);
-	}*/
-	
-	/*
 	 * Изменение пароля пользователя.
 	 * Возвращает 0 если пароль изменен,
 	 * 1 - если старый пароль неверен,
@@ -119,15 +80,18 @@ public abstract class UserDAO {
 		Admin admin = getEntityManager().find(Admin.class, id);
 		if (admin == null)
 			return -1;
-		Person tmp = getUserOfEmail(email);
 		int resultCode = 0;
-		if (tmp != null)
+		Person person = getUserOfEmail(email);
+		if (!email.equals("") && person != null && id != person.getId())
 			resultCode = 1;
 		else
 			admin.setEmail(email);
-		admin.setFirstName(firstName);
-		admin.setLastName(lastName);
-		admin.setPhone(phone);
+		if (!firstName.equals(""))
+			admin.setFirstName(firstName);
+		if (!lastName.equals(""))
+			admin.setLastName(lastName);
+		if (!phone.equals(""))
+			admin.setPhone(phone);
 		return resultCode;
 	}
 	
@@ -141,24 +105,17 @@ public abstract class UserDAO {
 		Citizen citizen = getEntityManager().find(Citizen.class, id);
 		if (citizen == null)
 			return -1;
-		Person tmp = getUserOfEmail(email);
 		int resultCode = 0;
-		if ((tmp != null) && (tmp.getId() != id))
+		Person person = getUserOfEmail(email);
+		if (!email.equals("") && person != null && id != person.getId())
 			resultCode = 1;
 		else
 			citizen.setEmail(email);
-		citizen.setFirstName(firstName);
-		citizen.setLastName(lastName);
+		if (!firstName.equals(""))
+			citizen.setFirstName(firstName);
+		if (!lastName.equals(""))
+			citizen.setLastName(lastName);
 		return resultCode;
-	}
-	
-	public void changeBonusPoint(long id, long bonusPoint)
-	{
-		getEntityManager().getTransaction().begin();
-		Citizen citizen = getEntityManager().find(Citizen.class, id);
-		citizen.setBonusPoint(bonusPoint);
-		getEntityManager().getTransaction().commit();
-		getEntityManager().close();
 	}
 
 	abstract EntityManager getEntityManager();

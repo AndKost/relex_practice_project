@@ -12,55 +12,36 @@
 	</h:head>
   
 	<h:body>
-		<h:form id="panelInfo">
+		<h:form id="panel">
 			<p:growl showDetail="true" sticky="false" life="2000"/>
 			<p:panel header="Личный кабинет #{viewData.time}">
 				<p:panelGrid columns="2">
 					<h:outputText value="Имя" />
-					<p:inputText value="#{viewData.citizen.firstName}" 
+					<p:inputText value="#{viewData.admin.firstName}" 
 						readonly="#{not viewData.changeData}"/>
 					
 					<h:outputText value="Фамилия" />
-					<p:inputText value="#{viewData.citizen.lastName}" 
+					<p:inputText value="#{viewData.admin.lastName}" 
 						readonly="#{not viewData.changeData}"/>
 					
 					<h:outputText value="Электронная почта" />
-					<p:inputText value="#{viewData.citizen.email}" 
+					<p:inputText value="#{viewData.admin.email}" 
 						readonly="#{not viewData.changeData}"/>
 						
-					<h:outputText value="Бонусные баллы" />
-					<p:inputText value="#{viewData.citizen.bonusPoint}" 
+					<h:outputText value="Телефон" />
+					<p:inputText value="#{viewData.admin.phone}" 
 						readonly="true"/>
 						
 				</p:panelGrid>
 				<p:commandButton value="Редактировать" ajax="true" action="#{viewData.edit}"
-									update="panelInfo" immediate="true"
+									update="panel" immediate="true"
 									rendered="#{not viewData.changeData}"/>
 				<p:commandButton value="Сохранить" ajax="true"
-							action="#{viewData.saveCitizen}" rendered="#{viewData.changeData}"
-							update="panelInfo"/>
+							action="#{viewData.saveAdmin}" rendered="#{viewData.changeData}"
+							update="panel"/>
 				<p:commandButton value="На главную страницу" ajax="false" immediate="true"
-							action="#{viewData.toHome}"/>			
+							action="#{viewData.toHome}"/>
 			</p:panel>
-			<p:commandButton value="изменить пароль" ajax="true"
-							action="#{viewData.change}" rendered="#{not viewData.changePasword}"
-							update="panePassword"/>
-			<p:panel header="Изменение проля #{viewData.time}" rendered="">
-				<p:panelGrid columns="2">
-					<h:outputText value="Имя" />
-					<p:inputText value="#{viewData.citizen.firstName}" 
-						readonly="#{not viewData.changeData}"/>
-					
-					<h:outputText value="Фамилия" />
-					<p:inputText value="#{viewData.citizen.lastName}" 
-						readonly="#{not viewData.changeData}"/>
-					
-					<h:outputText value="Электронная почта" />
-					<p:inputText value="#{viewData.citizen.email}" 
-						readonly="#{not viewData.changeData}"/>
-						
-				</p:panelGrid>
-			</p:panel>				
 		</h:form>
 	</h:body>
   

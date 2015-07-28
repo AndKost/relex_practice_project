@@ -11,15 +11,15 @@
 </head>
 <body>
    Hello!
-   sdfgdfzgdzf
-   123123123123
+   sdfgdfzgdzfS
    Hello, qwerty, and <br/>
    <h:form>
-   	 <h:outputText value="#{user.userLogin}" />
-     <h:commandButton value="Ok" action="#{user.doAction}"/>
-     <h:commandButton value="regist" action="#{user.newCitizen}"/>
-     <h:commandButton value="Войти" action="#{user.toLogin}"/>
-     <h:commandButton value="Выйти" action="#{log.logout}"/>
+   	 <h:outputText value="#{userLog.typeUser}" />
+     <h:commandButton value="Ok" action="#{mainPage.doActionCitizen}" 
+     	rendered="#{true or userLog.typeUser eq 'ADMIN' or userLog.typeUser eq 'CITIZEN'}"/>
+     <h:commandButton value="regist" action="#{mainPage.newCitizen}"/>
+     <h:commandButton value="Войти" action="#{mainPage.toLogin}"/>
+     <h:commandButton value="Выйти" action="#{userLog.logout}"/>
    </h:form> 
 </body>
 </html>
