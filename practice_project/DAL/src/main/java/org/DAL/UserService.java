@@ -6,8 +6,6 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.DAL.model.Admin;
-import org.DAL.model.Citizen;
 import org.DAL.model.Person;
 
 @Stateless
@@ -29,13 +27,6 @@ public class UserService extends UserDAO {
 		// TODO Auto-generated method stub
 		super.registrationPerson(person);
 	}
-
-	/*@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	@Override
-	public int checkNewPerson(Person person) {
-		// TODO Auto-generated method stub
-		return super.checkNewPerson(person);
-	}*/
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
@@ -72,13 +63,6 @@ public class UserService extends UserDAO {
 			String email) {
 		// TODO Auto-generated method stub
 		return super.changeInfoCitizen(id, firstName, lastName, email);
-	}
-
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	@Override
-	public void changeBonusPoint(long id, long bonusPoint) {
-		// TODO Auto-generated method stub
-		super.changeBonusPoint(id, bonusPoint);
 	}
 	
 

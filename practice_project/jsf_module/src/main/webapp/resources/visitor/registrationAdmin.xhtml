@@ -85,12 +85,11 @@
 					<p:message id="adminCodeMess" for="adminCode"/>
 					
 				</p:panelGrid>
-				<p:commandButton value="Зарегестрироваться" ajax="false" 
+				<p:commandButton id="regist" value="Зарегестрироваться" ajax="false" 
 					action="#{user.registrationAdmin}"/>
+				<p:commandButton value="Отмена" ajax="false" immediate="true" action="#{user.cancel}"/>
 			</p:panel>
 		</h:form>
-		<p:commandButton value="Отмена" ajax="true" action="#{user.cancel}"/>
-		<p:commandButton value="Войти" ajax="true" action="#{user.toLogin}"/>
 	</h:body>
   
 </html>

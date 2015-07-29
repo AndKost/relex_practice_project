@@ -1,8 +1,6 @@
 package jsf_module;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,15 +12,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import org.DAL.*;
 import org.DAL.model.*;
-import org.omg.CORBA.Request;
-import org.primefaces.context.RequestContext;
 
-@SessionScoped
+@ConversationScoped
 @Named(value = "user") 
 public class UserController implements Serializable {
 	
@@ -35,20 +31,22 @@ public class UserController implements Serializable {
 	@EJB
 	private UserRolesService userRolesService;
 	
-	//@Inject
-	//private CheckController checkController;
-	
-	
-	/*@NotNull(message = "Введите имя")
-    @Pattern(regexp = "^[a-zA-Z0-9_-]$", message = "Логин содержит недопустимые сымволы")
-    @Size(min = 3, max = 15, message = "Логин должен содержать от 3 до 15 символов")*/
 	private String repeatPassword = "";
 	private Admin admin = new Admin();
 	private Citizen citizen = new Citizen();
 	private String adminCode = "";
+	private String time;
+	private boolean isTransient = true;
+	
+	@Inject
+	private Conversation conversation;
 	
 	@PostConstruct
-	public void Init() {}
+	public void Init() 
+	{
+		Date tmp = new Date();
+		time = tmp.toString();
+	}
 	
 	public void checkLogin(FacesContext facesContext, UIComponent component, Object value)
 		throws ValidatorException
@@ -179,61 +177,12 @@ public class UserController implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Регистрация прошла успешно", 
 						null));
-		return "faces/index?faces-redirect=true";
+		isTransient = conversation.isTransient();
+		if (!isTransient)
+			conversation.end();
+		return "/faces/index?faces-redirect=true";
 	}
-	
-	public String toHome()
-	{
-		return "HOME";
-	}
-	
-	public String toLogin()
-	{
-		return "LOGIN";
-	}
-	
-	public String cancel()
-	{
-		return "BACK_HOME";
-	}
-	
-	public String newCitizen()
-	{
-		return "REGISTCITIZEN";
-	}
-	
-	public String newAdmin()
-	{
-		return "REGISTADMIN";
-	}
-	
-	private void cipherPassword(Person newPerson)
-	{
-		MessageDigest md;
-		try {
-			md = MessageDigest.getInstance("SHA-256");
-			md.update(newPerson.getPassword().getBytes());
-	        byte byteData[] = md.digest();
-	        StringBuffer sb = new StringBuffer();
-	        for (int i = 0; i < byteData.length; i++) {
-	         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-	         newPerson.setPassword(sb.toString());
-	        }
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		/*String encodePassword;
-		Base64Encoder ww = new Base64Encoder();
-		try {
-			encodePassword = Base64Encoder.encode(newPerson.getPassword());
-			newPerson.setPassword(encodePassword);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			adminCode  = "ERROR";
-			e.printStackTrace();
-		}*/
-	}
-	
+
 	public String registrationCitizen()
 	{
 		citizen.setRegistrationDate(new Date());
@@ -255,7 +204,31 @@ public class UserController implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Регистрация прошла успешно", 
 						null));
-		return "HOME";
+		isTransient = conversation.isTransient();
+		if (!isTransient)
+			conversation.end();
+		return "/faces/index?faces-redirect=true";
+	}
+	
+	public String cancel()
+	{
+		isTransient = conversation.isTransient();
+		if (!isTransient)
+			conversation.end();
+		return "/faces/index?faces-redirect=true";
+	}
+	
+	public String newAdmin()
+	{
+		return "/faces/faces/resources/visitor/registrationAdmin.xhtml?faces-redirect=true";
+	}
+	
+	public String newCitizen()
+	{
+		isTransient = conversation.isTransient();
+		if (isTransient)
+			conversation.begin();
+		return "REGISTCITIZEN";
 	}
 	
 	public Admin getAdmin() {
@@ -274,16 +247,6 @@ public class UserController implements Serializable {
 		this.citizen = citizen;
 	}
 
-	public String toPersonalLayer()
-	{
-		return "PERSONAL_LAYER";
-	}
-
-	public String doAction()
-	{
-		return "HELLOADMIN";
-	}
-
 	public String getAdminCode() {
 		return adminCode;
 	}
@@ -292,17 +255,17 @@ public class UserController implements Serializable {
 		this.adminCode = adminCode;
 	}
 	
-	public String getUserLogin()
-	{
-		//FacesContext facesContext = FacesContext.getCurrentInstance();
-		//HttpSession httpSession = (HttpSession)facesContext.getExternalContext().getSession(false);
-		String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-		if (login == null)
-			return "Гость";
-		else
-			return login;
+	
+	
+	
+	
+	
+	public String getTime() {
+		return time;
 	}
 
-
-
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
 }

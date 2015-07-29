@@ -1,5 +1,7 @@
 package org.DAL;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -14,6 +16,7 @@ import java.util.List;
 public class CommentService extends CommentDAO {
 	@PersistenceContext
 	EntityManager entityManager;
+	
 	@Override
 	EntityManager getEntityManager() {
 		return entityManager;
@@ -23,6 +26,13 @@ public class CommentService extends CommentDAO {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void insertComment(Comment comment) {
 		super.insertComment(comment);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public int changeBonusPoint(long idUser, long bonusPoint) {
+		// TODO Auto-generated method stub
+		return super.changeBonusPoint(idUser, bonusPoint);
 	}
 
 	@Override
@@ -53,5 +63,12 @@ public class CommentService extends CommentDAO {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Comment> getCommentsByAuthorId(long authorId) {
 		return super.getCommentsByAuthorId(authorId);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Comment> getCommentForPremoderation() {
+		// TODO Auto-generated method stub
+		return super.getCommentForPremoderation();
 	}
 }

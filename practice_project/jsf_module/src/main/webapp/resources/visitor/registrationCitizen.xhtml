@@ -11,7 +11,7 @@
 	<h:body>
 		<h:form>
 			<p:growl for="regist" showDetail="false" sticky="true" life="5000" redisplay="fasle"/>
-			<p:panel header="Регистрация гаражанина">
+			<p:panel header="Регистрация гаражанина #{user.time}">
 				<p:panelGrid columns="3">
 					<h:outputText  value = "Логин:"/>
 					<p:inputText id = "login" value = "#{user.citizen.login}"
@@ -68,9 +68,10 @@
 				</p:panelGrid>
 				<p:commandButton id="regist" value="Зарегестрироваться" ajax="false" 
 					action="#{user.registrationCitizen}"/>
-		<p:commandButton value="Back" ajax="false" immediate="true" action="#{user.cancel}"/>
-		<br/>
-		<p:commandLink value="Загеристрироваться как администратор" immediate="true" action="#{user.newAdmin}" />
+				<p:commandButton value="Отмена" ajax="false" immediate="true" action="#{user.cancel}"/>
+				<br/>
+				<p:commandLink action="#{user.newAdmin}" 
+					value="Загеристрироваться как администратор" ajax="false" immediate="true"/>
 			</p:panel>
 		</h:form>
 	</h:body>

@@ -90,7 +90,7 @@
             <from-action>#{interviewBean.go}</from-action>
             <from-outcome>index_interview</from-outcome>
             <to-view-id>/resources/user/Interview/Index.xhtml</to-view-id>
-            <redirect/>
+            <redirect />
         </navigation-case>
     </navigation-rule>
 
