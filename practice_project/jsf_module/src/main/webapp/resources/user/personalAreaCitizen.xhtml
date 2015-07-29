@@ -41,26 +41,7 @@
 							update="panelInfo"/>
 				<p:commandButton value="На главную страницу" ajax="false" immediate="true"
 							action="#{viewData.toHome}"/>			
-			</p:panel>
-			<p:commandButton value="изменить пароль" ajax="true"
-							action="#{viewData.change}" rendered="#{not viewData.changePasword}"
-							update="panePassword"/>
-			<p:panel header="Изменение проля #{viewData.time}" rendered="">
-				<p:panelGrid columns="2">
-					<h:outputText value="Имя" />
-					<p:inputText value="#{viewData.citizen.firstName}" 
-						readonly="#{not viewData.changeData}"/>
-					
-					<h:outputText value="Фамилия" />
-					<p:inputText value="#{viewData.citizen.lastName}" 
-						readonly="#{not viewData.changeData}"/>
-					
-					<h:outputText value="Электронная почта" />
-					<p:inputText value="#{viewData.citizen.email}" 
-						readonly="#{not viewData.changeData}"/>
-						
-				</p:panelGrid>
-			</p:panel>				
+			</p:panel>			
 		</h:form>
 	</h:body>
   

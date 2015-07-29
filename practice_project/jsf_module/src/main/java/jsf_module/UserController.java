@@ -18,7 +18,7 @@ import javax.inject.Named;
 import org.DAL.*;
 import org.DAL.model.*;
 
-@SessionScoped
+@ConversationScoped
 @Named(value = "user") 
 public class UserController implements Serializable {
 	
@@ -36,6 +36,10 @@ public class UserController implements Serializable {
 	private Citizen citizen = new Citizen();
 	private String adminCode = "";
 	private String time;
+	private boolean isTransient = true;
+	
+	@Inject
+	private Conversation conversation;
 	
 	@PostConstruct
 	public void Init() 
@@ -173,6 +177,9 @@ public class UserController implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Регистрация прошла успешно", 
 						null));
+		isTransient = conversation.isTransient();
+		if (!isTransient)
+			conversation.end();
 		return "/faces/index?faces-redirect=true";
 	}
 
@@ -197,17 +204,31 @@ public class UserController implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Регистрация прошла успешно", 
 						null));
+		isTransient = conversation.isTransient();
+		if (!isTransient)
+			conversation.end();
 		return "/faces/index?faces-redirect=true";
 	}
 	
 	public String cancel()
 	{
+		isTransient = conversation.isTransient();
+		if (!isTransient)
+			conversation.end();
 		return "/faces/index?faces-redirect=true";
 	}
 	
 	public String newAdmin()
 	{
 		return "/faces/faces/resources/visitor/registrationAdmin.xhtml?faces-redirect=true";
+	}
+	
+	public String newCitizen()
+	{
+		isTransient = conversation.isTransient();
+		if (isTransient)
+			conversation.begin();
+		return "REGISTCITIZEN";
 	}
 	
 	public Admin getAdmin() {

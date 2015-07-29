@@ -65,9 +65,6 @@ public class viewDataController implements Serializable{
 	
 	public void edit()
 	{
-		isTransient = conversation.isTransient();
-		if (isTransient)
-			conversation.begin();
 		changeData = true;
 	}
 	
@@ -127,6 +124,30 @@ public class viewDataController implements Serializable{
 		if (!isTransient)
 			conversation.end();
 		return "/faces/index?faces-redirect=true";
+	}
+	
+	public String viewDataAdmin()
+	{
+		isTransient = conversation.isTransient();
+		if (isTransient)
+			conversation.begin();
+		return "VIEWDATAADMIN";
+	}
+	
+	public String viewData()
+	{
+		isTransient = conversation.isTransient();
+		if (isTransient)
+			conversation.begin();
+		String typeUser = userLogController.getTypeUser();
+		if (typeUser.equals("ADMIN"))
+			return "VIEWDATAADMIN";
+		if (typeUser.equals("CITIZEN"))
+			return "VIEWDATACITIZEN";
+		isTransient = conversation.isTransient();
+		if (!isTransient)
+			conversation.end();
+		return "";
 	}
 	
 	public Admin getAdmin() {

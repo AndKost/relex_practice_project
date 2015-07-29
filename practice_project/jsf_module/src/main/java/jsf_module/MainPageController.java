@@ -26,10 +26,5 @@ public class MainPageController {
 	{
 		return "LOGIN";
 	}
-	
-	public String newCitizen()
-	{
-		return "REGISTCITIZEN";
-	}
 
 }
