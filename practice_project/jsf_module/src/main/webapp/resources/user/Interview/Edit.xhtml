@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<f:view>
+    <f:metadata>
+        <f:viewParam name="id" value="#{interviewBean.viewId}"/>
+    </f:metadata>
+</f:view>
+<h:head>
+    <title>Interview</title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <h:inputHidden required="true" value="#{interviewBean.interview.id}"/>
+        <p:growl for="submitBtn" showDetail="false" sticky="true" life="5000" redisplay="fasle"/>
+        <p:panel header="Add interview">
+            <p:panelGrid columns="3">
+                <h:outputText  value = "Text:"/>
+                <p:inputText id = "inputText" value = "#{interviewBean.interview.text}"
+                             requiredMessage="Insert text"
+                             required="true">
+                    <p:ajax event="keyup" delay="500" update="textErrMess"/>
+                </p:inputText>
+                <p:message for="inputText" id="textErrMess"/>
+
+                <h:outputText value="Start date:"/>
+                <p:calendar id="startDate" value="#{interviewBean.interview.startDate}" locale="de" navigator="true"
+                            pattern="yyyy-MMM-dd"
+                            requiredMessage="Enter correct date">
+                    <p:ajax event="blur" delay="500" update="startErrMess"/>
+                </p:calendar>
+                <p:message for="startDate" id="startErrMess"/>
+
+                <h:outputText value="Finish date:"/>
+                <p:calendar id ="finishDate" value="#{interviewBean.interview.finishDate}" locale="de" navigator="true"
+                            pattern="yyyy-MMM-dd"
+                            requiredMessage="Enter correct date">
+                    <p:ajax event="blur" delay="500" update="endErrMess"/>
+                </p:calendar>
+                <p:message for="finishDate" id="endErrMess"/>
+            </p:panelGrid>
+            <h:commandButton id="submitBtn" ajax="false" value="Submit" action="#{interviewBean.updateInterview}"/>
+        </p:panel>
+    </h:form>
+
+    <h:form>
+        <h:commandButton value="Index" action="#{interviewBean.go}"/>
+    </h:form>
+</h:body>
+</html>

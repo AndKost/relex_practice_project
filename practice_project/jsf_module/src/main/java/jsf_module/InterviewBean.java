@@ -6,14 +6,20 @@ import org.DAL.UserService;
 import org.DAL.model.Admin;
 import org.DAL.model.Comment;
 import org.DAL.model.Interview;
+import org.DAL.model.Person;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by ALUCARA on 21.07.2015.
@@ -36,6 +42,12 @@ public class InterviewBean {
     Interview interview = new Interview();
 
     Integer viewId;
+
+    @PostConstruct
+    public void init()
+    {
+        interview = new Interview();
+    }
 
     public Integer getViewId() {
         return viewId;
